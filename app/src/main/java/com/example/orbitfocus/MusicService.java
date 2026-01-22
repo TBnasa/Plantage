@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -13,27 +15,29 @@ import java.util.List;
 
 /**
  * MusicService - Arka plan müzik çalma servisi.
- * 
  * Özellikler:
- * - 4 müzik dosyasını rastgele sırayla çalar
- * - Kesintisiz geçiş (Gapless playback with NextMediaPlayer)
- * - Sonsuz döngü (liste bitince tekrar karıştırıp başlar)
- * - Arka planda çalmaya devam eder
- * - Ses seviyesi %35 (arka plan müziği için uygun)
+ * - Fade-Out / Fade-In geçişleri
+ * - Sonsuz döngü (Shuffle)
+ * - Arka planda çalma
  */
 public class MusicService extends Service {
 
     private static final String TAG = "MusicService";
-    private static final float BACKGROUND_VOLUME = 0.35f; // %35 ses seviyesi
+    private float targetVolume = 0.35f; // Hedef ses seviyesi (değiştirilebilir)
+    private static final int FADE_DURATION = 3000; // 3 saniye fade süresi
+    private static final int FADE_INTERVAL = 100; // 100ms güncelleme sıklığı
+    private float fadeStep = 0.01f; // Dinamik hesaplanacak
 
     private MediaPlayer currentPlayer;
-    private MediaPlayer nextPlayer;
     private List<Integer> playlist;
     private int currentIndex = 0;
-    private boolean isPrepared = false;
-    private float currentVolume = BACKGROUND_VOLUME;
+    private float currentVolume = 0f;
+    private boolean isFadingOut = false;
 
-    // Müzik dosyaları (res/raw klasöründe)
+    // İzleme ve Fade işlemleri için Handler
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    // Müzik dosyaları
     private final int[] musicResources = {
             R.raw.muzik_1,
             R.raw.muzik_2,
@@ -49,20 +53,33 @@ public class MusicService extends Service {
         }
     }
 
+    // Periyodik kontrol: Şarkı bitimine az kaldı mı?
+    private Runnable monitorRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (currentPlayer != null && currentPlayer.isPlaying() && !isFadingOut) {
+                int remaining = currentPlayer.getDuration() - currentPlayer.getCurrentPosition();
+                // Bitişe FADE_DURATION kadar kaldıysa FadeOut başlat
+                if (remaining > 0 && remaining <= FADE_DURATION) {
+                    startFadeOut();
+                }
+            }
+            handler.postDelayed(this, 1000); // Her saniye kontrol et
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "MusicService onCreate");
         initializePlaylist();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "MusicService onStartCommand");
-        if (!isPrepared) {
+        if (currentPlayer == null) {
             startPlayback();
         }
-        return START_STICKY; // Servis öldürülürse yeniden başlat
+        return START_STICKY;
     }
 
     @Override
@@ -70,167 +87,147 @@ public class MusicService extends Service {
         return binder;
     }
 
-    /**
-     * Playlist'i oluşturur ve karıştırır.
-     */
     private void initializePlaylist() {
         playlist = new ArrayList<>();
         for (int resId : musicResources) {
             playlist.add(resId);
         }
         shufflePlaylist();
-        currentIndex = 0;
-        Log.d(TAG, "Playlist initialized with " + playlist.size() + " tracks (shuffled)");
     }
 
-    /**
-     * Playlist'i rastgele karıştırır.
-     */
     private void shufflePlaylist() {
         Collections.shuffle(playlist);
-        Log.d(TAG, "Playlist shuffled");
     }
 
-    /**
-     * Müzik çalmayı başlatır.
-     */
     private void startPlayback() {
-        if (playlist == null || playlist.isEmpty()) {
+        if (playlist.isEmpty())
             initializePlaylist();
-        }
 
+        playTrack(playlist.get(currentIndex));
+        handler.post(monitorRunnable); // İzlemeyi başlat
+    }
+
+    private void playTrack(int resId) {
         try {
-            releasePlayer(currentPlayer);
-            currentPlayer = createPlayer(playlist.get(currentIndex));
-
+            // Varsa eski player'ı temizle
             if (currentPlayer != null) {
+                currentPlayer.release();
+            }
+
+            currentPlayer = MediaPlayer.create(this, resId);
+            if (currentPlayer != null) {
+                // Başlangıç sesi 0 (Fade-In için)
+                currentVolume = 0f;
                 currentPlayer.setVolume(currentVolume, currentVolume);
-                currentPlayer.setOnCompletionListener(mp -> playNext());
+
+                currentPlayer.setOnCompletionListener(mp -> {
+                    // Normalde monitorRunnable bitişten önce yakalar ama
+                    // çok kısa şarkılarda burası devreye girebilir
+                    playNext();
+                });
+
                 currentPlayer.start();
-                isPrepared = true;
+                isFadingOut = false;
+                startFadeIn(); // Fade-In ile başla
 
-                // Sonraki parçayı hazırla (gapless geçiş için)
-                prepareNextPlayer();
-
-                Log.d(TAG, "Started playing track " + (currentIndex + 1));
+                Log.d(TAG, "Playing track index: " + currentIndex);
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error starting playback: " + e.getMessage());
+            Log.e(TAG, "Error playing track", e);
         }
     }
 
-    /**
-     * Sonraki parçayı önceden hazırlar (gapless geçiş için).
-     */
-    private void prepareNextPlayer() {
-        try {
-            int nextIndex = (currentIndex + 1) % playlist.size();
-
-            releasePlayer(nextPlayer);
-            nextPlayer = createPlayer(playlist.get(nextIndex));
-
-            if (nextPlayer != null && currentPlayer != null) {
-                nextPlayer.setVolume(currentVolume, currentVolume);
-                // Gapless playback için setNextMediaPlayer kullan
-                currentPlayer.setNextMediaPlayer(nextPlayer);
-                Log.d(TAG, "Next player prepared for track " + (nextIndex + 1));
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error preparing next player: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Sonraki parçaya geçer.
-     */
     private void playNext() {
         currentIndex++;
-
-        // Liste bitti mi kontrol et
         if (currentIndex >= playlist.size()) {
-            // Listeyi yeniden karıştır ve başa dön
-            shufflePlaylist();
             currentIndex = 0;
-            Log.d(TAG, "Playlist completed, reshuffled and starting over");
+            shufflePlaylist();
         }
-
-        // Önceki player'ı temizle
-        releasePlayer(currentPlayer);
-
-        // Hazırlanan next player'ı current yap
-        currentPlayer = nextPlayer;
-        nextPlayer = null;
-
-        if (currentPlayer != null) {
-            currentPlayer.setOnCompletionListener(mp -> playNext());
-
-            // Eğer henüz çalmıyorsa başlat
-            if (!currentPlayer.isPlaying()) {
-                currentPlayer.start();
-            }
-
-            Log.d(TAG, "Playing track " + (currentIndex + 1));
-
-            // Sonraki parçayı hazırla
-            prepareNextPlayer();
-        } else {
-            // Yedek: Manuel başlat
-            startPlayback();
-        }
+        playTrack(playlist.get(currentIndex));
     }
 
-    /**
-     * MediaPlayer oluşturur.
-     */
-    private MediaPlayer createPlayer(int resId) {
-        try {
-            MediaPlayer player = MediaPlayer.create(this, resId);
-            if (player != null) {
-                player.setVolume(currentVolume, currentVolume);
-            }
-            return player;
-        } catch (Exception e) {
-            Log.e(TAG, "Error creating player: " + e.getMessage());
-            return null;
-        }
+    private void startFadeIn() {
+        // Step hesapla: Hedef sese 3 saniyede ulaşmalı
+        float steps = (float) FADE_DURATION / FADE_INTERVAL;
+        fadeStep = targetVolume / steps;
+
+        handler.removeCallbacks(fadeOutRunnable); // FadeOut varsa iptal
+        handler.post(fadeInRunnable);
     }
 
-    /**
-     * MediaPlayer'ı güvenli şekilde serbest bırakır.
-     */
-    private void releasePlayer(MediaPlayer player) {
-        if (player != null) {
-            try {
-                if (player.isPlaying()) {
-                    player.stop();
-                }
-                player.reset();
-                player.release();
-            } catch (Exception e) {
-                Log.e(TAG, "Error releasing player: " + e.getMessage());
+    private void startFadeOut() {
+        isFadingOut = true;
+        // Step hesapla: Mevcut sesten 0'a 3 saniyede inmeli
+        float steps = (float) FADE_DURATION / FADE_INTERVAL;
+        fadeStep = currentVolume / steps;
+
+        Log.d(TAG, "Starting Fade Out");
+        handler.removeCallbacks(fadeInRunnable); // FadeIn varsa iptal
+        handler.post(fadeOutRunnable);
+    }
+
+    private Runnable fadeInRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (currentPlayer == null)
+                return;
+
+            currentVolume += fadeStep;
+            if (currentVolume >= targetVolume) {
+                currentVolume = targetVolume;
+                currentPlayer.setVolume(currentVolume, currentVolume);
+                // Fade bitti
+            } else {
+                currentPlayer.setVolume(currentVolume, currentVolume);
+                handler.postDelayed(this, FADE_INTERVAL);
             }
         }
-    }
+    };
+
+    private Runnable fadeOutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (currentPlayer == null)
+                return;
+
+            currentVolume -= fadeStep;
+            if (currentVolume <= 0f) {
+                currentVolume = 0f;
+                currentPlayer.setVolume(currentVolume, currentVolume);
+                // Ses tamamen kısıldı, bir sonrakine geç
+                playNext();
+            } else {
+                currentPlayer.setVolume(currentVolume, currentVolume);
+                handler.postDelayed(this, FADE_INTERVAL);
+            }
+        }
+    };
+
+    // ==================== PUBLIC METHODS (MainActivity için) ====================
 
     /**
      * Ses seviyesini ayarlar (0.0 - 1.0).
      */
     public void setVolume(float volume) {
-        currentVolume = Math.max(0f, Math.min(1f, volume));
-        if (currentPlayer != null) {
-            currentPlayer.setVolume(currentVolume, currentVolume);
+        targetVolume = Math.max(0f, Math.min(1f, volume));
+
+        // Eğer şu an fade yapmıyorsak, sesi direkt güncelle veya fade et
+        // Basitlik için eğer fade yoksa direkt uygula
+        boolean isFading = (handler.hasCallbacks(fadeInRunnable) || handler.hasCallbacks(fadeOutRunnable));
+        if (!isFading) {
+            currentVolume = targetVolume;
+            if (currentPlayer != null) {
+                currentPlayer.setVolume(currentVolume, currentVolume);
+            }
         }
-        if (nextPlayer != null) {
-            nextPlayer.setVolume(currentVolume, currentVolume);
-        }
-        Log.d(TAG, "Volume set to " + (int) (currentVolume * 100) + "%");
+        Log.d(TAG, "Volume set to " + targetVolume);
     }
 
     /**
-     * Mevcut ses seviyesini döndürür.
+     * Mevcut (hedef) ses seviyesini döndürür.
      */
     public float getVolume() {
-        return currentVolume;
+        return targetVolume;
     }
 
     /**
@@ -253,21 +250,13 @@ public class MusicService extends Service {
         }
     }
 
-    /**
-     * Müzik çalıyor mu kontrol eder.
-     */
-    public boolean isPlaying() {
-        return currentPlayer != null && currentPlayer.isPlaying();
-    }
-
     @Override
     public void onDestroy() {
-        Log.d(TAG, "MusicService onDestroy");
-        releasePlayer(currentPlayer);
-        releasePlayer(nextPlayer);
-        currentPlayer = null;
-        nextPlayer = null;
-        isPrepared = false;
+        handler.removeCallbacksAndMessages(null); // Tüm runnable'ları durdur
+        if (currentPlayer != null) {
+            currentPlayer.release();
+            currentPlayer = null;
+        }
         super.onDestroy();
     }
 }

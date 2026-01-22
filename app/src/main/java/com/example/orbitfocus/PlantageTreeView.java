@@ -14,44 +14,69 @@ import android.view.View;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import com.example.orbitfocus.model.Leaf;
 import com.example.orbitfocus.model.LeafStatus;
 
 /**
- * PlantageTreeView - Matematiksel Fraktal Ağaç Custom View.
- * Canvas kullanarak dinamik olarak dallanıp budaklanan bir ağaç çizer.
- * Her yaprak, Leaf durumuna göre farklı renkte görünür.
+ * PlantageTreeView - Fraktal Ağaç Custom View
+ * 
+ * Özellikler:
+ * - Dinamik büyüme: Her Leaf için bir dal
+ * - Fraktal/recursive dallanma yapısı
+ * - Açık yeşil renk paleti
+ * - Görsel hata koruması (canvas.save/restore)
+ * - Klasik terracotta saksı + gölge
  */
 public class PlantageTreeView extends View {
 
+    // ==================== DATA ====================
     private List<Leaf> leaves = new ArrayList<>();
+    private List<LeafHitBox> clickZones = new ArrayList<>();
+    private OnLeafClickListener leafClickListener;
+
+    // ==================== PAINTS ====================
     private Paint stemPaint;
-    private Paint leafActivePaint;
-    private Paint leafLockedPaint;
-    private Paint leafWitheredPaint;
-    private Paint veinPaint;
-    private Paint veinWitheredPaint;
-    private Paint textPaint;
+    private Paint leafLightPaint;
+    private Paint leafDarkPaint;
     private Paint potPaint;
     private Paint potRimPaint;
+    private Paint soilPaint;
     private Paint shadowPaint;
+    private Paint textPaint;
 
-    private OnLeafClickListener leafClickListener;
-    private List<LeafHitBox> clickZones = new ArrayList<>();
-    private Random fractalRandom;
+    // ==================== COLOR PALETTE - AÇIK YEŞİL ====================
+    private static final int COLOR_BACKGROUND = Color.WHITE;
 
-    // Colors
-    private static final int COLOR_STEM = Color.rgb(46, 184, 96);
-    private static final int COLOR_LEAF_ACTIVE = Color.rgb(76, 175, 80);
-    private static final int COLOR_LEAF_LOCKED = Color.rgb(102, 187, 106);
-    private static final int COLOR_LEAF_WITHERED = Color.rgb(139, 105, 20);
-    private static final int COLOR_VEIN = Color.rgb(50, 140, 70);
-    private static final int COLOR_VEIN_WITHERED = Color.rgb(107, 80, 16);
-    private static final int COLOR_TERRACOTTA = Color.rgb(180, 101, 76);
-    private static final int COLOR_TERRACOTTA_LIGHT = Color.rgb(200, 128, 106);
-    private static final int COLOR_BACKGROUND = Color.rgb(236, 238, 232);
+    // Gövde - Açık Yeşil
+    private static final int COLOR_STEM = Color.rgb(102, 187, 106);
 
+    // Yapraklar - Mint & Pastel Yeşil
+    private static final int COLOR_LEAF_LIGHT = Color.rgb(165, 214, 167);
+    private static final int COLOR_LEAF_DARK = Color.rgb(129, 199, 132);
+
+    // Solmuş Yapraklar
+    private static final int COLOR_WITHERED_LIGHT = Color.rgb(188, 170, 164);
+    private static final int COLOR_WITHERED_DARK = Color.rgb(161, 136, 127);
+
+    // Kilitli Yapraklar
+    private static final int COLOR_LOCKED_LIGHT = Color.rgb(200, 200, 200);
+    private static final int COLOR_LOCKED_DARK = Color.rgb(170, 170, 170);
+
+    // Saksı - Klasik Terracotta
+    private static final int COLOR_POT_MAIN = Color.rgb(194, 125, 95);
+    private static final int COLOR_POT_RIM = Color.rgb(220, 160, 130);
+    private static final int COLOR_SOIL = Color.rgb(100, 72, 60);
+
+    // Gölge
+    private static final int COLOR_SHADOW = Color.argb(40, 0, 0, 0);
+
+    // ==================== DIMENSIONS ====================
+    private static final float POT_HEIGHT = 100f;
+    private static final float POT_TOP_WIDTH = 160f;
+    private static final float POT_BOTTOM_WIDTH = 120f;
+    private static final float POT_MARGIN_BOTTOM = 50f;
+
+    // ==================== HITBOX ====================
     private class LeafHitBox {
         float x, y, radius;
         int index;
@@ -68,6 +93,7 @@ public class PlantageTreeView extends View {
         void onLeafClick(int index, Leaf leaf);
     }
 
+    // ==================== CONSTRUCTORS ====================
     public PlantageTreeView(Context context) {
         super(context);
         init();
@@ -86,63 +112,48 @@ public class PlantageTreeView extends View {
         stemPaint.setStrokeCap(Paint.Cap.ROUND);
         stemPaint.setAntiAlias(true);
 
-        // Active Leaf Paint
-        leafActivePaint = new Paint();
-        leafActivePaint.setColor(COLOR_LEAF_ACTIVE);
-        leafActivePaint.setStyle(Paint.Style.FILL);
-        leafActivePaint.setAntiAlias(true);
+        // Leaf Paints
+        leafLightPaint = new Paint();
+        leafLightPaint.setStyle(Paint.Style.FILL);
+        leafLightPaint.setAntiAlias(true);
 
-        // Locked Leaf Paint
-        leafLockedPaint = new Paint();
-        leafLockedPaint.setColor(COLOR_LEAF_LOCKED);
-        leafLockedPaint.setStyle(Paint.Style.FILL);
-        leafLockedPaint.setAntiAlias(true);
+        leafDarkPaint = new Paint();
+        leafDarkPaint.setStyle(Paint.Style.FILL);
+        leafDarkPaint.setAntiAlias(true);
 
-        // Withered Leaf Paint
-        leafWitheredPaint = new Paint();
-        leafWitheredPaint.setColor(COLOR_LEAF_WITHERED);
-        leafWitheredPaint.setStyle(Paint.Style.FILL);
-        leafWitheredPaint.setAntiAlias(true);
-
-        // Vein Paints
-        veinPaint = new Paint();
-        veinPaint.setColor(COLOR_VEIN);
-        veinPaint.setStyle(Paint.Style.STROKE);
-        veinPaint.setStrokeWidth(4f);
-        veinPaint.setStrokeCap(Paint.Cap.ROUND);
-        veinPaint.setAntiAlias(true);
-
-        veinWitheredPaint = new Paint();
-        veinWitheredPaint.setColor(COLOR_VEIN_WITHERED);
-        veinWitheredPaint.setStyle(Paint.Style.STROKE);
-        veinWitheredPaint.setStrokeWidth(4f);
-        veinWitheredPaint.setAntiAlias(true);
-
-        // Text Paint
-        textPaint = new Paint();
-        textPaint.setColor(Color.rgb(100, 100, 100));
-        textPaint.setTextSize(18f);
-        textPaint.setAntiAlias(true);
-        textPaint.setTextAlign(Paint.Align.CENTER);
-
-        // Pot Paints
+        // Pot Paint
         potPaint = new Paint();
-        potPaint.setColor(COLOR_TERRACOTTA);
+        potPaint.setColor(COLOR_POT_MAIN);
         potPaint.setStyle(Paint.Style.FILL);
         potPaint.setAntiAlias(true);
 
+        // Pot Rim Paint
         potRimPaint = new Paint();
-        potRimPaint.setColor(COLOR_TERRACOTTA_LIGHT);
+        potRimPaint.setColor(COLOR_POT_RIM);
         potRimPaint.setStyle(Paint.Style.FILL);
         potRimPaint.setAntiAlias(true);
 
+        // Soil Paint
+        soilPaint = new Paint();
+        soilPaint.setColor(COLOR_SOIL);
+        soilPaint.setStyle(Paint.Style.FILL);
+        soilPaint.setAntiAlias(true);
+
         // Shadow Paint
         shadowPaint = new Paint();
-        shadowPaint.setColor(Color.rgb(200, 200, 195));
+        shadowPaint.setColor(COLOR_SHADOW);
         shadowPaint.setStyle(Paint.Style.FILL);
         shadowPaint.setAntiAlias(true);
+
+        // Text Paint
+        textPaint = new Paint();
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(20f);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setAntiAlias(true);
     }
 
+    // ==================== PUBLIC METHODS ====================
     public void setLeaves(List<Leaf> leaves) {
         this.leaves = leaves;
         invalidate();
@@ -152,6 +163,7 @@ public class PlantageTreeView extends View {
         this.leafClickListener = listener;
     }
 
+    // ==================== ONDRAW ====================
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -159,178 +171,213 @@ public class PlantageTreeView extends View {
         // Background
         canvas.drawColor(COLOR_BACKGROUND);
 
-        int w = getWidth();
-        int h = getHeight();
-        float centerX = w / 2f;
-        float potBottomY = h - 40f;
+        int width = getWidth();
+        int height = getHeight();
+        float centerX = width / 2f;
+        float potBottomY = height - POT_MARGIN_BOTTOM;
+        float potTopY = potBottomY - POT_HEIGHT;
 
-        // Reset click zones and random seed for consistent fractal
+        // Clear click zones
         clickZones.clear();
-        fractalRandom = new Random(42); // Fixed seed for consistent tree shape
 
-        // Draw shadow
-        drawShadow(canvas, centerX, potBottomY);
+        // === 1. SHADOW (Strictly Under Pot) ===
+        canvas.save();
+        drawShadow(canvas, centerX, potBottomY + 5f); // 5px below pot base - moved up
+        canvas.restore();
 
-        // Draw pot
+        // === 2. POT BODY ===
+        canvas.save();
+        // Slightly darker terracotta for better look
+        potPaint.setColor(Color.rgb(185, 100, 70));
         drawPot(canvas, centerX, potBottomY);
+        canvas.restore();
 
-        // Calculate tree parameters based on leaf count
-        int leafCount = Math.max(1, leaves.size());
-        float stemStartY = potBottomY - 120f;
+        // === 3. SOIL (Inside Rim Area) ===
+        // Soil center should be aligned with Rim center
+        canvas.save();
+        drawSoil(canvas, centerX, potTopY);
+        canvas.restore();
 
-        // Draw fractal tree
-        drawFractalTree(canvas, centerX, stemStartY, leafCount);
+        // === 4. TREE (Logo Style - Straight Stem) ===
+        // Tree comes out from the center of the Soil
+        canvas.save();
+        int leafCount = leaves.size();
+        drawLogoTree(canvas, centerX, potTopY, leafCount);
+        canvas.restore();
+
+        // === 5. POT RIM (Covers the connection point) ===
+        canvas.save();
+        // Rim slightly lighter
+        potRimPaint.setColor(Color.rgb(210, 120, 90));
+        drawPotRim(canvas, centerX, potTopY);
+        canvas.restore();
     }
 
+    // ==================== SHADOW ====================
     private void drawShadow(Canvas canvas, float cx, float bottomY) {
-        RectF shadowRect = new RectF(cx - 90, bottomY - 12, cx + 90, bottomY + 12);
+        // Flat oval shadow - slightly tighter
+        RectF shadowRect = new RectF(cx - 95, bottomY - 6, cx + 95, bottomY + 6);
         canvas.drawOval(shadowRect, shadowPaint);
     }
 
+    // ==================== POT ====================
     private void drawPot(Canvas canvas, float cx, float bottomY) {
-        float potTopW = 160f;
-        float potBottomW = 110f;
-        float potH = 95f;
-
         Path potPath = new Path();
-        potPath.moveTo(cx - potTopW / 2, bottomY - potH);
-        potPath.lineTo(cx + potTopW / 2, bottomY - potH);
-        potPath.lineTo(cx + potBottomW / 2, bottomY);
-        potPath.lineTo(cx - potBottomW / 2, bottomY);
+        potPath.moveTo(cx - POT_TOP_WIDTH / 2 + 10, bottomY - POT_HEIGHT); // Slightly inset top
+        potPath.lineTo(cx + POT_TOP_WIDTH / 2 - 10, bottomY - POT_HEIGHT);
+        potPath.lineTo(cx + POT_BOTTOM_WIDTH / 2, bottomY);
+        potPath.lineTo(cx - POT_BOTTOM_WIDTH / 2, bottomY);
         potPath.close();
-
         canvas.drawPath(potPath, potPaint);
+    }
 
-        RectF rim = new RectF(cx - potTopW / 2 - 8, bottomY - potH - 16,
-                cx + potTopW / 2 + 8, bottomY - potH + 8);
-        canvas.drawRoundRect(rim, 8, 8, potRimPaint);
+    private void drawPotRim(Canvas canvas, float cx, float topY) {
+        // Rim covers the top edge
+        RectF rimRect = new RectF(
+                cx - POT_TOP_WIDTH / 2,
+                topY - 15,
+                cx + POT_TOP_WIDTH / 2,
+                topY + 15);
+        canvas.drawRoundRect(rimRect, 8, 8, potRimPaint);
+    }
+
+    // ==================== SOIL ====================
+    private void drawSoil(Canvas canvas, float cx, float topY) {
+        // Soil is slightly smaller than rim, creating depth
+        RectF soilRect = new RectF(
+                cx - POT_TOP_WIDTH / 2 + 15,
+                topY - 8,
+                cx + POT_TOP_WIDTH / 2 - 15,
+                topY + 8);
+        canvas.drawOval(soilRect, soilPaint);
+    }
+
+    // ==================== LOGO STYLE TREE ====================
+    /**
+     * Logo Style Tree
+     * Straight stem, symmetric leaves, clean look.
+     */
+
+    // ==================== LOGO STYLE TREE ====================
+    /**
+     * Logo Style Tree
+     * Straight stem, symmetric leaves, clean look.
+     */
+    private void drawLogoTree(Canvas canvas, float cx, float baseY, int leafCount) {
+        if (leafCount <= 0)
+            return;
+
+        float treeHeight = 350f;
+        float stemTopY = baseY - treeHeight;
+
+        // === MAIN STEM ===
+        stemPaint.setStrokeWidth(18f);
+        stemPaint.setColor(COLOR_STEM);
+        // Draw stem slightly higher than top leaf base
+        canvas.drawLine(cx, baseY, cx, stemTopY + 50f, stemPaint);
+
+        // Get Top Leaf (Last one - "Anı Yaprağı")
+        int topLeafIndex = leaves.size() - 1;
+        Leaf topLeaf = leaves.get(topLeafIndex);
+
+        // Side Leaves (All except last one)
+        int sideLeafCount = Math.max(0, leafCount - 1);
+
+        // === SIDE LEAVES ===
+        if (sideLeafCount > 0) {
+            float startY = baseY - 60f;
+            // Distribute side leaves
+            float spacePerLeaf = (startY - (stemTopY + 80f)) / Math.max(1, sideLeafCount);
+
+            for (int i = 0; i < sideLeafCount; i++) {
+                float y = startY - (i * spacePerLeaf);
+                boolean isLeft = (i % 2 == 0);
+
+                float scale = 1.0f - (i * 0.05f);
+                scale = Math.max(0.6f, scale);
+
+                drawLogoLeaf(canvas, cx, y, isLeft, i, leaves.get(i), scale);
+            }
+        }
+
+        // === TOP LEAF (Angled 25 degrees right) ===
+        // The last leaf is placed at the top
+        drawLogoLeaf(canvas, cx, stemTopY + 60f, topLeafIndex, topLeaf, 1.0f, 25f);
     }
 
     /**
-     * Fraktal ağaç çizimi - dallanıp budaklanan yapı.
+     * Standard Leaf Call (Calculates angle based on side)
      */
-    private void drawFractalTree(Canvas canvas, float startX, float startY, int totalLeaves) {
-        if (totalLeaves <= 0)
-            return;
-
-        // Single stem growing upward with branches
-        float currentX = startX;
-        float currentY = startY;
-
-        // Calculate segment height based on leaf count
-        float baseSegmentHeight = 180f;
-        float segmentHeight = Math.max(120f, baseSegmentHeight - (totalLeaves * 5));
-
-        Path mainStem = new Path();
-        mainStem.moveTo(startX, startY);
-
-        // Main trunk thickness decreases as we go up
-        float baseThickness = 16f;
-
-        for (int i = 0; i < totalLeaves; i++) {
-            boolean isLeft = i % 2 == 0;
-
-            // Calculate next point with slight curve
-            float branchAngle = isLeft ? -25f : 25f;
-            float nextY = currentY - segmentHeight;
-            float curveOffset = branchAngle * 0.8f;
-            float nextX = startX + (isLeft ? -15 : 15) + fractalRandom.nextFloat() * 10 - 5;
-
-            // Stem thickness decreases
-            float thickness = baseThickness - (i * 1.5f);
-            thickness = Math.max(6f, thickness);
-            stemPaint.setStrokeWidth(thickness);
-
-            // Draw stem segment
-            Path segment = new Path();
-            segment.moveTo(currentX, currentY);
-            segment.quadTo(currentX + curveOffset, currentY - segmentHeight / 2, nextX, nextY);
-            canvas.drawPath(segment, stemPaint);
-
-            // Draw leaf at this branch point
-            if (i < leaves.size()) {
-                drawLeafAtPosition(canvas, nextX, nextY, isLeft, i, leaves.get(i));
-            }
-
-            currentX = nextX;
-            currentY = nextY;
-        }
+    private void drawLogoLeaf(Canvas canvas, float stemX, float stemY, boolean isLeft, int index, Leaf leaf,
+            float scale) {
+        float angle = isLeft ? -45f : 45f;
+        drawLogoLeaf(canvas, stemX, stemY, index, leaf, scale, angle);
     }
 
-    private void drawLeafAtPosition(Canvas canvas, float stemX, float stemY,
-            boolean isLeft, int index, Leaf leaf) {
-        // Determine paint based on leaf status
-        Paint currentLeafPaint;
-        Paint currentVeinPaint;
-
-        switch (leaf.status) {
-            case LOCKED:
-                currentLeafPaint = leafLockedPaint;
-                currentVeinPaint = veinPaint;
-                break;
-            case WITHERED:
-                currentLeafPaint = leafWitheredPaint;
-                currentVeinPaint = veinWitheredPaint;
-                break;
-            case ACTIVE:
-            default:
-                currentLeafPaint = leafActivePaint;
-                currentVeinPaint = veinPaint;
-                break;
+    /**
+     * Actual Leaf Drawing (With specific angle)
+     */
+    private void drawLogoLeaf(Canvas canvas, float stemX, float stemY, int index, Leaf leaf, float scale, float angle) {
+        // Status Colors
+        int lightColor = COLOR_LEAF_LIGHT;
+        int darkColor = COLOR_LEAF_DARK;
+        if (leaf.status == LeafStatus.WITHERED) {
+            lightColor = COLOR_WITHERED_LIGHT;
+            darkColor = COLOR_WITHERED_DARK;
+        } else if (leaf.status == LeafStatus.LOCKED) {
+            lightColor = COLOR_LOCKED_LIGHT;
+            darkColor = COLOR_LOCKED_DARK;
         }
 
-        float leafLen = 160f;
-        float leafWid = 80f;
-        float angle = isLeft ? -50 : 50;
+        leafLightPaint.setColor(lightColor);
+        leafDarkPaint.setColor(darkColor);
+
+        float h = 110f * scale;
+        float w = 55f * scale;
 
         canvas.save();
         canvas.translate(stemX, stemY);
         canvas.rotate(angle);
 
-        // Draw leaf shape
-        Path leafPath = new Path();
-        leafPath.moveTo(0, 0);
-        leafPath.cubicTo(leafLen * 0.25f, -leafWid * 0.55f,
-                leafLen * 0.6f, -leafWid * 0.45f,
-                leafLen, 0);
-        leafPath.cubicTo(leafLen * 0.6f, leafWid * 0.45f,
-                leafLen * 0.25f, leafWid * 0.55f,
-                0, 0);
-        leafPath.close();
+        // Use a stem offset so leaf doesn't overlap main stem weirdly
+        // Move out slightly
+        float offset = 8f;
+        canvas.translate(0, -offset);
 
-        canvas.drawPath(leafPath, currentLeafPaint);
+        // Shape: Broad oval
+        Path lightHalf = new Path();
+        lightHalf.moveTo(0, 0);
+        lightHalf.cubicTo(w, -h * 0.3f, w * 0.5f, -h * 0.8f, 0, -h);
+        lightHalf.close();
+        canvas.drawPath(lightHalf, leafLightPaint);
 
-        // Draw center vein
-        canvas.drawLine(12, 0, leafLen - 25, 0, currentVeinPaint);
+        Path darkHalf = new Path();
+        darkHalf.moveTo(0, 0);
+        darkHalf.cubicTo(-w, -h * 0.3f, -w * 0.5f, -h * 0.8f, 0, -h);
+        darkHalf.close();
+        canvas.drawPath(darkHalf, leafDarkPaint);
 
-        // Draw thumbnail or status indicator
-        if (leaf.status == LeafStatus.WITHERED) {
-            // Draw X mark for withered
-            drawWitheredMark(canvas, leafLen);
-        } else {
-            // Draw photo thumbnail or placeholder
-            String firstImg = leaf.getFirstImage();
-            if (firstImg != null && !firstImg.isEmpty()) {
-                drawThumbnail(canvas, leafLen, firstImg);
+        // Content
+        if (leaf.status == LeafStatus.ACTIVE) {
+            String img = leaf.getFirstImage();
+            if (img != null && !img.isEmpty()) {
+                drawThumbnail(canvas, -h * 0.45f, img, scale);
             } else {
-                drawPlaceholder(canvas, leafLen, leaf.status == LeafStatus.ACTIVE);
+                textPaint.setAlpha(220);
+                textPaint.setTextSize(24f * scale);
+                canvas.drawText("+", 0, -h * 0.45f, textPaint);
             }
         }
 
         canvas.restore();
 
-        // Date label
-        if (leaf.date != null) {
-            textPaint.setTextSize(16f);
-            float labelX = isLeft ? stemX - 100 : stemX + 100;
-            canvas.drawText(leaf.date, labelX, stemY + 6, textPaint);
+        // Hitbox (only if real leaf)
+        if (index >= 0) {
+            clickZones.add(new LeafHitBox(stemX, stemY, 70f * scale, index));
         }
-
-        // Add to click zones
-        clickZones.add(new LeafHitBox(stemX, stemY, 100f, index));
     }
 
-    private void drawThumbnail(Canvas canvas, float leafLen, String imagePath) {
+    private void drawThumbnail(Canvas canvas, float centerY, String imagePath, float scale) {
         try {
             File imgFile = new File(imagePath);
             if (imgFile.exists()) {
@@ -338,88 +385,39 @@ public class PlantageTreeView extends View {
                 opts.inSampleSize = 8;
                 Bitmap bmp = BitmapFactory.decodeFile(imagePath, opts);
                 if (bmp != null) {
-                    float imgSize = 50f;
-                    float imgX = leafLen * 0.5f - imgSize / 2;
-                    float imgY = -imgSize / 2;
+                    float size = 30f * scale;
+                    RectF rect = new RectF(-size / 2, centerY - size / 2, size / 2, centerY + size / 2);
 
-                    Paint imgPaint = new Paint();
-                    imgPaint.setAntiAlias(true);
+                    canvas.save();
+                    Path clip = new Path();
+                    clip.addOval(rect, Path.Direction.CW);
+                    canvas.clipPath(clip);
+                    canvas.drawBitmap(bmp, null, rect, null);
+                    canvas.restore();
 
-                    RectF imgRect = new RectF(imgX, imgY, imgX + imgSize, imgY + imgSize);
-                    canvas.drawBitmap(bmp, null, imgRect, imgPaint);
                     bmp.recycle();
-                    return;
                 }
             }
         } catch (Exception e) {
-            // Fall through to placeholder
-        }
-        drawPlaceholder(canvas, leafLen, true);
-    }
-
-    private void drawPlaceholder(Canvas canvas, float leafLen, boolean isActive) {
-        Paint placeholderPaint = new Paint();
-        placeholderPaint.setColor(Color.WHITE);
-        placeholderPaint.setAlpha(isActive ? 230 : 150);
-        placeholderPaint.setStyle(Paint.Style.FILL);
-        placeholderPaint.setAntiAlias(true);
-
-        float size = 42f;
-        float x = leafLen * 0.5f - size / 2;
-        float y = -size / 2;
-
-        RectF rect = new RectF(x, y, x + size, y + size);
-        canvas.drawRoundRect(rect, 10, 10, placeholderPaint);
-
-        if (isActive) {
-            // Plus icon
-            Paint plusPaint = new Paint();
-            plusPaint.setColor(Color.rgb(150, 150, 150));
-            plusPaint.setStrokeWidth(3);
-            plusPaint.setStrokeCap(Paint.Cap.ROUND);
-            plusPaint.setAntiAlias(true);
-            canvas.drawLine(x + size / 2, y + 12, x + size / 2, y + size - 12, plusPaint);
-            canvas.drawLine(x + 12, y + size / 2, x + size - 12, y + size / 2, plusPaint);
+            // Hata durumunda + işareti göster
+            textPaint.setAlpha(200);
+            canvas.drawText("+", 0, centerY, textPaint);
         }
     }
 
-    private void drawWitheredMark(Canvas canvas, float leafLen) {
-        Paint markPaint = new Paint();
-        markPaint.setColor(Color.rgb(100, 70, 20));
-        markPaint.setAlpha(180);
-        markPaint.setStyle(Paint.Style.FILL);
-        markPaint.setAntiAlias(true);
-
-        float size = 40f;
-        float x = leafLen * 0.5f - size / 2;
-        float y = -size / 2;
-
-        RectF rect = new RectF(x, y, x + size, y + size);
-        canvas.drawRoundRect(rect, 10, 10, markPaint);
-
-        // X mark
-        Paint xPaint = new Paint();
-        xPaint.setColor(Color.rgb(180, 140, 60));
-        xPaint.setStrokeWidth(4);
-        xPaint.setStrokeCap(Paint.Cap.ROUND);
-        xPaint.setAntiAlias(true);
-        canvas.drawLine(x + 12, y + 12, x + size - 12, y + size - 12, xPaint);
-        canvas.drawLine(x + size - 12, y + 12, x + 12, y + size - 12, xPaint);
-    }
-
+    // ==================== TOUCH ====================
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float tx = event.getX();
             float ty = event.getY();
 
-            // Check from top to bottom (latest leaves first)
             for (int i = clickZones.size() - 1; i >= 0; i--) {
                 LeafHitBox box = clickZones.get(i);
                 float dist = (float) Math.hypot(tx - box.x, ty - box.y);
                 if (dist < box.radius) {
-                    if (leafClickListener != null && i < leaves.size()) {
-                        leafClickListener.onLeafClick(i, leaves.get(i));
+                    if (leafClickListener != null && box.index < leaves.size()) {
+                        leafClickListener.onLeafClick(box.index, leaves.get(box.index));
                     }
                     return true;
                 }

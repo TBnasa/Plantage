@@ -123,9 +123,34 @@ public class MainActivity extends AppCompatActivity {
             btnSettings.setOnClickListener(v -> showSettingsDialog());
         }
 
+        // Support button - Buy Me a Coffee
+        setupSupportButton();
+
         ensureTodayLeafExists();
         startCountdownTimer();
         startMusicService();
+    }
+
+    /**
+     * Support butonunu ayarlar - Buy Me a Coffee linki.
+     */
+    private void setupSupportButton() {
+        View supportButton = findViewById(R.id.supportButton);
+        TextView tvSupport = findViewById(R.id.tvSupport);
+
+        // Update text based on language
+        if (tvSupport != null) {
+            tvSupport.setText(lang.getSupport());
+        }
+
+        // Click to open Buy Me a Coffee
+        if (supportButton != null) {
+            supportButton.setOnClickListener(v -> {
+                String url = "https://buymeacoffee.com/plantage_";
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            });
+        }
     }
 
     /**
@@ -480,7 +505,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnDelete.setOnClickListener(v -> {
             // Silme onayı iste
-            new android.app.AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog)
+            android.app.AlertDialog confirmDialog = new android.app.AlertDialog.Builder(this,
+                    android.R.style.Theme_Material_Light_Dialog)
                     .setTitle(lang.getDeleteLeafTitle())
                     .setMessage(lang.getDeleteConfirmation())
                     .setPositiveButton(lang.getYesDelete(), (d, w) -> {
@@ -491,7 +517,17 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     })
                     .setNegativeButton(lang.getCancel(), null)
-                    .show();
+                    .create();
+
+            // Butonları siyah arka planlı yap
+            confirmDialog.setOnShowListener(d -> {
+                confirmDialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+                confirmDialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE);
+                confirmDialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.BLACK);
+                confirmDialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
+            });
+
+            confirmDialog.show();
         });
 
         btnSave.setOnClickListener(v -> {

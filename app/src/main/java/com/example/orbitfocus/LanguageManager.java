@@ -378,4 +378,15 @@ public class LanguageManager {
                 "Sprache geändert...",
                 "Langue changée...");
     }
+
+    // Support button text
+    public String getSupport() {
+        return getString(
+                "Destek",
+                "Support",
+                "Поддержка",
+                "支持",
+                "Unterstützen",
+                "Soutenir");
+    }
 }
