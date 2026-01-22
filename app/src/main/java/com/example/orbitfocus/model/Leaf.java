@@ -88,7 +88,7 @@ public class Leaf {
             Calendar deadline = Calendar.getInstance();
             deadline.setTime(leafDate);
             deadline.add(Calendar.DAY_OF_YEAR, 1);
-            deadline.set(Calendar.HOUR_OF_DAY, 9);
+            deadline.set(Calendar.HOUR_OF_DAY, 0); // Gece yarısı 00:00
             deadline.set(Calendar.MINUTE, 0);
             deadline.set(Calendar.SECOND, 0);
 

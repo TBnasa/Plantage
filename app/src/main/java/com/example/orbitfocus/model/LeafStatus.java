@@ -7,7 +7,8 @@ package com.example.orbitfocus.model;
 public enum LeafStatus {
     /**
      * ACTIVE (Canlı):
-     * - Bugün oluşturulmuş ve ertesi sabah 09:00'a kadar düzenlenebilir.
+     * - Bugün oluşturulmuş ve ertesi gün 00:00'a (gece yarısı) kadar
+     * düzenlenebilir.
      * - Fotoğraf, yazı veya video eklenebilir.
      * - Renk: Canlı Yeşil
      */
@@ -24,7 +25,7 @@ public enum LeafStatus {
 
     /**
      * WITHERED (Kurumuş):
-     * - Kullanıcı ertesi sabah 09:00'a kadar hiçbir veri girmedi.
+     * - Kullanıcı ertesi gün 00:00'a (gece yarısı) kadar hiçbir veri girmedi.
      * - Yaprak kahverengiye döner, kurur.
      * - O güne bir daha veri eklenemez.
      * - Tıklandığında "Bu günü kaçırdın" uyarısı gösterilir.

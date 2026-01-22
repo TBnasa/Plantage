@@ -202,11 +202,37 @@ public class MainActivity extends AppCompatActivity {
      * Bugün için yaprak yoksa oluşturur.
      */
     private void ensureTodayLeafExists() {
-        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        Leaf todayLeaf = dbHelper.getLeafByDate(today);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String today = sdf.format(new Date());
 
-        if (todayLeaf == null) {
+        List<Leaf> leaves = dbHelper.getAllLeaves();
+        if (leaves.isEmpty()) {
             dbHelper.createLeaf(today);
+        } else {
+            // Son yaprağın tarihini al
+            Leaf lastLeaf = leaves.get(leaves.size() - 1);
+            try {
+                Date lastDate = sdf.parse(lastLeaf.date);
+                Date todayDate = sdf.parse(today);
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(lastDate);
+
+                // Son yaprağın ertesi gününden başlayarak bugüne kadar (bugün dahil) eksikleri
+                // tamamla
+                cal.add(Calendar.DAY_OF_YEAR, 1);
+
+                while (!cal.getTime().after(todayDate)) {
+                    String dateStr = sdf.format(cal.getTime());
+                    // Zaten varsa (CONFLICT_IGNORE sayesinde) sorun olmaz, yoksa oluşturulur
+                    dbHelper.createLeaf(dateStr);
+                    cal.add(Calendar.DAY_OF_YEAR, 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Hata durumunda en azından bugünü oluştur
+                dbHelper.createLeaf(today);
+            }
         }
 
         loadLeaves();
@@ -662,16 +688,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateCountdown() {
         Calendar now = Calendar.getInstance();
-        Calendar next9 = Calendar.getInstance();
-        next9.set(Calendar.HOUR_OF_DAY, 9);
-        next9.set(Calendar.MINUTE, 0);
-        next9.set(Calendar.SECOND, 0);
+        Calendar nextMidnight = Calendar.getInstance();
+        // Bir sonraki gün 00:00
+        nextMidnight.set(Calendar.HOUR_OF_DAY, 0);
+        nextMidnight.set(Calendar.MINUTE, 0);
+        nextMidnight.set(Calendar.SECOND, 0);
 
-        if (now.after(next9)) {
-            next9.add(Calendar.DAY_OF_YEAR, 1);
+        // Eğer şu an (örn 00:30) midnight'ı geçtiyse, hedef yarın 00:00 olmalı
+        // Ama "nextMidnight" şu anı (bugün 00:00) gösteriyorsa ve now ondan büyükse, +1
+        // gün ekle
+        if (now.after(nextMidnight)) {
+            nextMidnight.add(Calendar.DAY_OF_YEAR, 1);
         }
 
-        long diff = next9.getTimeInMillis() - now.getTimeInMillis();
+        long diff = nextMidnight.getTimeInMillis() - now.getTimeInMillis();
         long seconds = diff / 1000;
         long minutes = seconds / 60;
         long hours = minutes / 60;
