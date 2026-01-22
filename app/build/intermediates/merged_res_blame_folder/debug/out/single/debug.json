@@ -1,0 +1,94 @@
+[
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_bg_semi_transparent.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/bg_semi_transparent.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.orbitfocus.app-main-6:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_ic_logo.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/ic_logo.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/layout_activity_splash.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.example.orbitfocus.app-main-6:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_splash_gradient.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/splash_gradient.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_ic_settings.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.example.orbitfocus.app-main-6:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/raw_muzik_4.ogg.flat",
+        "source": "com.example.orbitfocus.app-main-6:/raw/muzik_4.ogg"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_splash_logo.png.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/splash_logo.png"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_ic_check.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/ic_check.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/raw_muzik_1.ogg.flat",
+        "source": "com.example.orbitfocus.app-main-6:/raw/muzik_1.ogg"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/layout_activity_main.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/raw_song2.mp3.flat",
+        "source": "com.example.orbitfocus.app-main-6:/raw/song2.mp3"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/anim_fade_in_scale.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/anim/fade_in_scale.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_ic_launcher.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/raw_song1.mp3.flat",
+        "source": "com.example.orbitfocus.app-main-6:/raw/song1.mp3"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/raw_muzik_3.ogg.flat",
+        "source": "com.example.orbitfocus.app-main-6:/raw/muzik_3.ogg"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_glass_panel_background.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/glass_panel_background.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.example.orbitfocus.app-main-6:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.example.orbitfocus.app-main-6:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/drawable_gradient_background.xml.flat",
+        "source": "com.example.orbitfocus.app-main-6:/drawable/gradient_background.xml"
+    },
+    {
+        "merged": "com.example.orbitfocus.app-merged_res-4:/raw_muzik_2.ogg.flat",
+        "source": "com.example.orbitfocus.app-main-6:/raw/muzik_2.ogg"
+    }
+]
