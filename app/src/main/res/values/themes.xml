@@ -1,0 +1,23 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme - Plantage Green Theme -->
+    <style name="Theme.OrbitFocus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color - Forest Green -->
+        <item name="colorPrimary">@color/forest_green</item>
+        <item name="colorPrimaryVariant">@color/olive_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color - Sage -->
+        <item name="colorSecondary">@color/sage_green</item>
+        <item name="colorSecondaryVariant">@color/leaf_active</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/olive_green</item>
+        <!-- Background -->
+        <item name="android:windowBackground">@color/background_soft_gray</item>
+    </style>
+    
+    <!-- No Action Bar Theme for Splash -->
+    <style name="Theme.OrbitFocus.NoActionBar" parent="Theme.OrbitFocus">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:statusBarColor">@color/background_soft_gray</item>
+    </style>
+</resources>
