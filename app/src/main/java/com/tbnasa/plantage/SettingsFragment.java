@@ -66,12 +66,18 @@ public class SettingsFragment extends Fragment {
         TextView tvLanguageLabel = view.findViewById(R.id.tvLanguageLabel);
         TextView tvAboutLabel = view.findViewById(R.id.tvAboutLabel);
         TextView tvSettingsSubtitle = view.findViewById(R.id.tvSettingsSubtitle);
+        TextView tvDarkModeLabel = view.findViewById(R.id.tvDarkModeLabel);
+        TextView tvBiometricLabel = view.findViewById(R.id.tvBiometricLabel);
+        TextView tvGithubLabel = view.findViewById(R.id.tvGithubLabel);
 
         if (tvPrefsLabel != null) tvPrefsLabel.setText(lang.getPreferences());
         if (tvVolumeLabel != null) tvVolumeLabel.setText(lang.getMusicVolume());
         if (tvLanguageLabel != null) tvLanguageLabel.setText(lang.getLanguage_());
         if (tvAboutLabel != null) tvAboutLabel.setText(lang.getAboutApp());
         if (tvSettingsSubtitle != null) tvSettingsSubtitle.setText(lang.getYourGarden());
+        if (tvDarkModeLabel != null) tvDarkModeLabel.setText(lang.getDarkModeLabel());
+        if (tvBiometricLabel != null) tvBiometricLabel.setText(lang.getBiometricLabel());
+        if (tvGithubLabel != null) tvGithubLabel.setText(lang.getGithubLabel());
 
         setupBackupSection(view);
 

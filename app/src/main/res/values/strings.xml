@@ -69,6 +69,9 @@
 
     <!-- Settings strings -->
     <string name="preferences">PREFERENCES</string>
+    <string name="dark_mode">🌙 Dark Mode</string>
+    <string name="biometric_lock">🔒 Biometric Lock</string>
+    <string name="github_repo">Github Repository</string>
     <string name="support_developer">☕ Support the Developer</string>
     <string name="about_app">ℹ️ About Plantage</string>
     <string name="your_garden">Your mindfulness garden</string>

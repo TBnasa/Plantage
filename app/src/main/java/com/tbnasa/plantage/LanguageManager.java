@@ -149,6 +149,9 @@ public class LanguageManager {
     public String getTotalMemoriesLabel() { return context.getString(R.string.total_memories_label); }
     public String getWordsWritten() { return context.getString(R.string.words_written); }
     public String getPreferences() { return context.getString(R.string.preferences); }
+    public String getDarkModeLabel() { return context.getString(R.string.dark_mode); }
+    public String getBiometricLabel() { return context.getString(R.string.biometric_lock); }
+    public String getGithubLabel() { return context.getString(R.string.github_repo); }
     public String getSupportDeveloper() { return context.getString(R.string.support_developer); }
     public String getAboutApp() { return context.getString(R.string.about_app); }
     public String getYourGarden() { return context.getString(R.string.your_garden); }

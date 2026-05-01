@@ -69,6 +69,9 @@
 
     <!-- Ayarlar ekranı -->
     <string name="preferences">TERCİHLER</string>
+    <string name="dark_mode">🌙 Karanlık Mod</string>
+    <string name="biometric_lock">🔒 Biyometrik Kilit</string>
+    <string name="github_repo">Github Deposu</string>
     <string name="support_developer">☕ Geliştiriciyi Destekle</string>
     <string name="about_app">ℹ️ Plantage Hakkında</string>
     <string name="your_garden">Senin farkındalık bahçen</string>
