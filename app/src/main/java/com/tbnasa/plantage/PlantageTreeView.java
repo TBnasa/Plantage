@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import androidx.core.content.ContextCompat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class PlantageTreeView extends View {
     private Paint textPaint;
 
     // ==================== COLOR PALETTE - VIBRANT GREEN ====================
-    private static final int COLOR_BACKGROUND = Color.parseColor("#FDFDFB");
+    private int colorBackground;
 
     // Gövde - Forest Green (canlı)
     private static final int COLOR_STEM = Color.parseColor("#27AE60");
@@ -109,6 +110,8 @@ public class PlantageTreeView extends View {
     }
 
     private void init() {
+        colorBackground = ContextCompat.getColor(getContext(), R.color.colorBackground);
+
         // Stem Paint
         stemPaint = new Paint();
         stemPaint.setColor(COLOR_STEM);
@@ -173,7 +176,7 @@ public class PlantageTreeView extends View {
         super.onDraw(canvas);
 
         // Background
-        canvas.drawColor(COLOR_BACKGROUND);
+        canvas.drawColor(colorBackground);
 
         int width = getWidth();
         int height = getHeight();
@@ -442,5 +445,29 @@ public class PlantageTreeView extends View {
             }
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * Renders the tree to a Bitmap for the home screen widget.
+     */
+    public static Bitmap renderToBitmap(Context context, int width, int height, List<Leaf> leaves) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        // Create a temporary view to use its drawing logic
+        PlantageTreeView tempView = new PlantageTreeView(context);
+        tempView.setLeaves(leaves);
+
+        // Measure and layout the temp view
+        tempView.measure(
+            View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY)
+        );
+        tempView.layout(0, 0, width, height);
+
+        // Draw to the canvas
+        tempView.draw(canvas);
+
+        return bitmap;
     }
 }

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+import androidx.core.content.ContextCompat;
 
 /**
  * MoodChartView — Custom donut chart displaying leaf status distribution.
@@ -53,6 +54,10 @@ public class MoodChartView extends View {
     }
 
     private void init() {
+        int colorSurface = ContextCompat.getColor(getContext(), R.color.colorSurface);
+        int colorTextPrimary = ContextCompat.getColor(getContext(), R.color.colorTextPrimary);
+        int colorEmpty = ContextCompat.getColor(getContext(), R.color.colorDivider);
+
         activePaint.setStyle(Paint.Style.FILL);
         activePaint.setColor(COLOR_ACTIVE);
 
@@ -63,13 +68,13 @@ public class MoodChartView extends View {
         witheredPaint.setColor(COLOR_WITHERED);
 
         emptyPaint.setStyle(Paint.Style.FILL);
-        emptyPaint.setColor(COLOR_EMPTY);
+        emptyPaint.setColor(colorEmpty);
 
         centerPaint.setStyle(Paint.Style.FILL);
-        centerPaint.setColor(Color.WHITE);
+        centerPaint.setColor(colorSurface);
 
         textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setColor(Color.parseColor("#2F3E46"));
+        textPaint.setColor(colorTextPrimary);
         textPaint.setTextAlign(Paint.Align.CENTER);
     }
 
@@ -92,30 +97,31 @@ public class MoodChartView extends View {
         arcRect.set(pad, pad, size - pad, size - pad);
 
         int total = activeCount + lockedCount + witheredCount;
+        int capacity = Math.max(total, 30); // Show progress relative to at least 30 days
 
-        if (total == 0) {
-            // Draw full empty ring
-            canvas.drawArc(arcRect, 0, 360, true, emptyPaint);
-        } else {
+        // Draw background empty ring
+        canvas.drawArc(arcRect, 0, 360, true, emptyPaint);
+
+        if (total > 0) {
             float startAngle = -90f;
 
             // Active arc
             if (activeCount > 0) {
-                float sweep = (360f * activeCount) / total;
+                float sweep = (360f * activeCount) / capacity;
                 canvas.drawArc(arcRect, startAngle, sweep, true, activePaint);
                 startAngle += sweep;
             }
 
             // Locked arc
             if (lockedCount > 0) {
-                float sweep = (360f * lockedCount) / total;
+                float sweep = (360f * lockedCount) / capacity;
                 canvas.drawArc(arcRect, startAngle, sweep, true, lockedPaint);
                 startAngle += sweep;
             }
 
             // Withered arc
             if (witheredCount > 0) {
-                float sweep = (360f * witheredCount) / total;
+                float sweep = (360f * witheredCount) / capacity;
                 canvas.drawArc(arcRect, startAngle, sweep, true, witheredPaint);
             }
         }

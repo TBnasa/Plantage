@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,14 +21,15 @@ import java.util.Random;
 import java.util.concurrent.Executor;
 
 /**
- * SplashActivity - Uygulama açılış ekranı.
- * Her açılışta rastgele bir felsefe sözü gösterir ve Biyometrik Kilit uygular.
+ * SplashActivity — Premium animated splash screen.
+ * Shows animated tree canvas, quote, and transitions to MainActivity.
  */
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DURATION = 3000;
+    private static final int SPLASH_DURATION = 2200;
     private LanguageManager langManager;
     private boolean isAuthenticating = false;
+    private boolean hasNavigated = false;
 
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
@@ -41,37 +45,34 @@ public class SplashActivity extends AppCompatActivity {
 
         langManager = new LanguageManager(this);
 
-        TextView tvQuote = findViewById(R.id.tvQuote);
+        TextView tvQuote   = findViewById(R.id.tvQuote);
         TextView tvAppName = findViewById(R.id.tvAppName);
-        ImageView imgLogo = findViewById(R.id.imgLogo);
 
-        String randomQuote = getRandomQuote();
+        View logoContainer = findViewById(R.id.logoContainer);
+        View dotIndicator = findViewById(R.id.dotIndicator);
 
-        if (imgLogo != null) {
-            AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-            fadeIn.setDuration(1200);
-            fadeIn.setFillAfter(true);
-            imgLogo.startAnimation(fadeIn);
-        }
-
-        if (tvQuote != null) {
-            tvQuote.setText("\"" + randomQuote + "\"");
-            AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-            fadeIn.setDuration(1500);
-            fadeIn.setStartOffset(500);
-            fadeIn.setFillAfter(true);
-            tvQuote.startAnimation(fadeIn);
-        }
-
+        // Animate app name fade in
         if (tvAppName != null) {
-            AlphaAnimation fadeInDelayed = new AlphaAnimation(0.0f, 1.0f);
-            fadeInDelayed.setDuration(1000);
-            fadeInDelayed.setStartOffset(300);
-            fadeInDelayed.setFillAfter(true);
-            tvAppName.startAnimation(fadeInDelayed);
+            tvAppName.animate().alpha(1f).setDuration(1000).setStartDelay(200).setInterpolator(new DecelerateInterpolator()).start();
         }
 
-        // Delay starting authentication to allow splash to show
+        // Animate quote fade in
+        if (tvQuote != null) {
+            String randomQuote = getRandomQuote();
+            tvQuote.setText("\u201c" + randomQuote + "\u201d");
+            tvQuote.animate().alpha(1f).setDuration(1200).setStartDelay(600).setInterpolator(new DecelerateInterpolator()).start();
+        }
+
+        // Animate logo and dot fade in
+        if (logoContainer != null) {
+            logoContainer.animate().alpha(1f).setDuration(1000).setInterpolator(new DecelerateInterpolator()).start();
+        }
+
+        if (dotIndicator != null) {
+            dotIndicator.animate().alpha(1f).setDuration(1200).setStartDelay(800).setInterpolator(new DecelerateInterpolator()).start();
+        }
+
+        // Navigate after delay
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (langManager.isBiometricEnabled()) {
                 startBiometricAuth();
@@ -79,6 +80,20 @@ public class SplashActivity extends AppCompatActivity {
                 proceedToMain();
             }
         }, SPLASH_DURATION);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // Touch to skip
+        if (event.getAction() == MotionEvent.ACTION_UP && !hasNavigated && !isAuthenticating) {
+            if (langManager.isBiometricEnabled()) {
+                startBiometricAuth();
+            } else {
+                proceedToMain();
+            }
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     private void startBiometricAuth() {
@@ -92,9 +107,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 isAuthenticating = false;
-                // If user cancels or error occurs, show toast and possibly exit or retry
                 Toast.makeText(getApplicationContext(), errString, Toast.LENGTH_SHORT).show();
-                // For a privacy app, we might want to finish() here if auth fails
                 finish();
             }
 
@@ -108,20 +121,23 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                // Failed attempt, usually handled by system UI, but we can log it
             }
         });
 
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(getString(R.string.app_name))
                 .setSubtitle(langManager.getLockedMemoryInfo())
-                .setAllowedAuthenticators(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG | androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+                .setAllowedAuthenticators(
+                        androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG |
+                        androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)
                 .build();
 
         biometricPrompt.authenticate(promptInfo);
     }
 
     private void proceedToMain() {
+        if (hasNavigated) return;
+        hasNavigated = true;
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -131,7 +147,6 @@ public class SplashActivity extends AppCompatActivity {
     private String getRandomQuote() {
         String[] quotes = langManager.getQuotes();
         Random random = new Random();
-        int index = random.nextInt(quotes.length);
-        return quotes[index];
+        return quotes[random.nextInt(quotes.length)];
     }
 }

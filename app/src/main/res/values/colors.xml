@@ -1,59 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ═══════ Zen Design System — Organic Canvas ═══════ -->
+    <!-- ═══════ Plantage Premium Design System ═══════ -->
 
-    <!-- Canvas / Global Background — Soft Cream -->
-    <color name="zen_bg">#F9F9F7</color>
+    <!-- Primary Brand — Forest Green -->
+    <color name="colorPrimary">#1B5E20</color>
+    <color name="colorPrimaryDark">#003300</color>
+    <color name="colorPrimaryLight">#43A047</color>
+    <color name="colorAccent">#43A047</color>
+    <color name="colorSage">#66BB6A</color>
+    <color name="colorMist">#E8F5E9</color>
+    <color name="colorCream">#F5F5F0</color>
+    <color name="colorClay">#A1887F</color>
 
-    <!-- Surfaces — Antique Paper (tactile warmth) -->
-    <color name="zen_surface">#FDFBF7</color>
-    <color name="zen_input_bg">#F4F2EE</color>
+    <!-- Typography -->
+    <color name="colorTextPrimary">#1C2B1C</color>
+    <color name="colorTextSecondary">#6B7C6B</color>
+    <color name="colorTextHint">#A0B0A0</color>
 
-    <!-- Primary Accent — Muted Sage Green (the "Living" force) -->
-    <color name="zen_accent">#8DA399</color>
-    <color name="zen_accent_dark">#6B8A7F</color>
-    <color name="zen_accent_light">#DDE8E4</color>
-
-    <!-- Secondary Accent — Warm Sand -->
-    <color name="zen_secondary">#EDE9E3</color>
-
-    <!-- Typography — Ink on paper tones -->
-    <color name="zen_text_primary">#2C3A30</color>
-    <color name="zen_text_secondary">#6B7C72</color>
-    <color name="zen_icon_inactive">#BDC8C3</color>
-
-    <!-- Borders & Dividers — whisper thin -->
-    <color name="zen_border">#E8E4DD</color>
+    <!-- Surfaces -->
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorBackground">#F5F3EE</color>
+    <color name="colorDivider">#E0DDD8</color>
+    <color name="colorRipple">#124A7A4A</color>
 
     <!-- Semantic -->
+    <color name="colorDanger">#C0665A</color>
+    <color name="colorDangerDark">#A0524A</color>
+
+    <!-- Legacy zen_ aliases for backward compatibility -->
+    <color name="zen_bg">#F5F3EE</color>
+    <color name="zen_surface">#FFFFFF</color>
+    <color name="zen_input_bg">#E8F0E8</color>
+    <color name="zen_accent">#4A7A4A</color>
+    <color name="zen_accent_dark">#2D4A2D</color>
+    <color name="zen_accent_light">#E8F0E8</color>
+    <color name="zen_secondary">#F0EDE8</color>
+    <color name="zen_text_primary">#1C2B1C</color>
+    <color name="zen_text_secondary">#6B7C6B</color>
+    <color name="zen_icon_inactive">#A0B0A0</color>
+    <color name="zen_border">#E0DDD8</color>
     <color name="zen_danger">#C0665A</color>
     <color name="zen_danger_dark">#A0524A</color>
 
-    <!-- ═══════ Tree View Palette ═══════ -->
-    <color name="sage_green">#8DA399</color>
-    <color name="leaf_active">#8DA399</color>
-    <color name="leaf_locked">#6B8A7F</color>
+    <!-- Tree View Palette -->
+    <color name="sage_green">#66BB6A</color>
+    <color name="leaf_active">#43A047</color>
+    <color name="leaf_locked">#1B5E20</color>
     <color name="leaf_withered">#9E8A6A</color>
-
-    <!-- Tree — Organic tones -->
-    <color name="stem_green">#7A9E8E</color>
-    <color name="stem_dark">#5E7D6E</color>
-    <color name="leaf_vein">#5E7D6E</color>
+    <color name="stem_green">#388E3C</color>
+    <color name="stem_dark">#1B5E20</color>
+    <color name="leaf_vein">#1B5E20</color>
     <color name="leaf_vein_withered">#7A6A4F</color>
-
-    <!-- Earth Tones (Pot) — Warm terracotta -->
-    <color name="terracotta">#C4A68C</color>
-    <color name="terracotta_light">#D4BCA6</color>
-    <color name="soil_brown">#8B7355</color>
+    <color name="terracotta">#A1887F</color>
+    <color name="terracotta_light">#BCAAA4</color>
+    <color name="soil_brown">#5D4037</color>
 
     <!-- Basic -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <!-- Legacy aliases -->
-    <color name="background_cream">#F9F9F7</color>
-    <color name="background_soft_gray">#F9F9F7</color>
-    <color name="text_primary">#2C3A30</color>
-    <color name="text_secondary">#6B7C72</color>
+    <!-- Legacy -->
+    <color name="background_cream">#F5F3EE</color>
+    <color name="background_soft_gray">#F5F3EE</color>
+    <color name="text_primary">#1C2B1C</color>
+    <color name="text_secondary">#6B7C6B</color>
     <color name="semi_transparent_gray">#20808080</color>
 </resources>

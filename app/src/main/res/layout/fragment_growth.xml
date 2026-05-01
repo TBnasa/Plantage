@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/zen_bg"
+    android:background="@color/colorBackground"
     android:fillViewport="true"
     android:clipToPadding="false">
 
@@ -18,20 +18,24 @@
         <!-- Page title -->
         <TextView
             android:id="@+id/tvGrowthTitle"
-            style="@style/ZenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Growth 📊" />
+            android:text="Seri 📊"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="22sp"
+            android:fontFamily="sans-serif-medium" />
 
         <TextView
             android:id="@+id/tvGrowthSubtitle"
-            style="@style/ZenBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:text="Your journaling journey" />
+            android:layout_marginTop="2dp"
+            android:text="Your journaling journey"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif" />
 
-        <!-- Stats Row -->
+        <!-- Stat cards row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,28 +48,28 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_zen"
-                android:elevation="2dp"
+                android:background="@drawable/bg_stat_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/pad_card_large">
+                android:padding="@dimen/pad_card">
 
                 <TextView
                     android:id="@+id/tvStreakValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
                     android:text="0"
-                    android:textColor="@color/zen_accent"
-                    android:textSize="36sp" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="26sp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <TextView
                     android:id="@+id/tvStreakLabel"
-                    style="@style/ZenLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="Day Streak 🔥" />
+                    android:layout_marginTop="2dp"
+                    android:text="Seri 🔥"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <!-- Total Memories Card -->
@@ -74,136 +78,151 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_zen"
-                android:elevation="2dp"
+                android:background="@drawable/bg_stat_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/pad_card_large">
+                android:padding="@dimen/pad_card">
 
                 <TextView
                     android:id="@+id/tvTotalMemories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
                     android:text="0"
-                    android:textColor="@color/zen_accent"
-                    android:textSize="36sp" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="26sp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <TextView
                     android:id="@+id/tvMemoriesLabel"
-                    style="@style/ZenLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="Memories 🌿" />
+                    android:layout_marginTop="2dp"
+                    android:text="Toplam Anı 🌿"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Donut Chart area -->
+        <!-- Leaf Status card — donut chart -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginTop="@dimen/spacing_lg"
             android:background="@drawable/bg_card_zen"
-            android:elevation="2dp"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/pad_card_large">
 
             <TextView
                 android:id="@+id/tvLeafStatusLabel"
-                style="@style/ZenSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leaf Status" />
+                android:text="Yaprak Durumu"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_gravity="start" />
 
+            <!-- Donut chart -->
             <com.tbnasa.plantage.MoodChartView
                 android:id="@+id/moodChart"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
                 android:layout_marginTop="@dimen/spacing_lg" />
 
-            <!-- Legend -->
+            <!-- Legend row -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_lg"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!-- Active dot -->
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="@color/zen_accent" />
-
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:background="@drawable/bg_legend_dot_active" />
                 <TextView
                     android:id="@+id/tvLegendActive"
-                    style="@style/ZenLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
-                    android:text="Active" />
+                    android:layout_marginStart="5dp"
+                    android:text="Aktif"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="9sp" />
 
-                <!-- Locked dot -->
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginStart="@dimen/spacing_lg"
-                    android:background="@color/zen_accent_dark" />
-
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/bg_legend_dot_locked" />
                 <TextView
                     android:id="@+id/tvLegendLocked"
-                    style="@style/ZenLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
-                    android:text="Locked" />
+                    android:layout_marginStart="5dp"
+                    android:text="Kilitli"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="9sp" />
 
-                <!-- Withered dot -->
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginStart="@dimen/spacing_lg"
-                    android:background="@color/zen_secondary" />
-
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/bg_legend_dot_withered" />
                 <TextView
                     android:id="@+id/tvLegendWithered"
-                    style="@style/ZenLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
-                    android:text="Withered" />
+                    android:layout_marginStart="5dp"
+                    android:text="Solmuş"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="9sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Words Written Card -->
+        <!-- Words Written — single line card -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_lg"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="2dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/pad_card_large">
+            android:layout_marginTop="@dimen/spacing_md"
+            android:background="@drawable/bg_stat_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/pad_card"
+            android:paddingVertical="14dp">
 
             <TextView
-                android:id="@+id/tvWordsWritten"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="0"
-                android:textColor="@color/zen_accent"
-                android:textSize="36sp" />
+                android:layout_weight="1"
+                android:text="✍️"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tvWordsLabel"
-                style="@style/ZenLabel"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="Words Written ✍️" />
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvWordsWritten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/tvWordsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yazılan Kelime"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

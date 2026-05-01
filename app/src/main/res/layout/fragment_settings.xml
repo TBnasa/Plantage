@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/zen_bg"
+    android:background="@color/colorBackground"
     android:fillViewport="true"
     android:clipToPadding="false">
 
@@ -15,335 +16,414 @@
         android:paddingTop="@dimen/spacing_xl"
         android:paddingBottom="@dimen/spacing_lg">
 
-        <!-- Profile Section -->
+        <!-- Hero card: Profile -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="2dp"
-            android:gravity="center"
+            android:background="@drawable/bg_hero_card"
+            android:elevation="0dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="@dimen/pad_card_large">
+            android:padding="20dp">
 
-            <!-- Profile circle -->
+            <!-- Icon container -->
             <FrameLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_profile_circle" />
-
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_icon_container">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="🌿"
-                    android:textSize="32sp" />
+                    android:textSize="22sp" />
             </FrameLayout>
 
             <TextView
-                style="@style/ZenSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:text="Plantage" />
+                android:layout_marginTop="12dp"
+                android:text="Plantage"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium" />
 
             <TextView
                 android:id="@+id/tvSettingsSubtitle"
-                style="@style/ZenLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="Your mindfulness garden" />
+                android:layout_marginTop="4dp"
+                android:text="Your mindfulness garden"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Settings List -->
+        <!-- Section: PREFERENCES -->
         <TextView
             android:id="@+id/tvPrefsLabel"
-            style="@style/ZenLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xxl"
-            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginBottom="6dp"
             android:text="PREFERENCES"
-            android:textStyle="bold"
-            android:letterSpacing="0.1" />
+            android:textColor="@color/colorTextHint"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.1"
+            android:textAllCaps="true" />
 
-        <!-- Volume Row -->
+        <!-- Preferences card: all items in one card -->
         <LinearLayout
-            android:id="@+id/rowVolume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
             android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
+            android:orientation="vertical">
 
+            <!-- Volume row -->
             <LinearLayout
+                android:id="@+id/rowVolume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingHorizontal="14dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:id="@+id/tvVolumeLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Music Volume"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvVolumeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="35%"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/seekVolume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:max="100"
+                    android:progress="35"
+                    android:progressTint="@color/colorPrimaryLight"
+                    android:thumbTint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                android:background="@color/colorMist" android:layout_marginHorizontal="14dp" />
+
+            <!-- Language row -->
+            <LinearLayout
+                android:id="@+id/rowLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+
 
                 <TextView
-                    android:id="@+id/tvVolumeLabel"
+                    android:id="@+id/tvLanguageLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="🔊 Music Volume"
-                    android:textColor="@color/zen_text_primary"
-                    android:textSize="@dimen/text_body" />
+                    android:text="Language"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tvVolumeValue"
+                    android:id="@+id/tvCurrentLang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="35%"
-                    android:textColor="@color/zen_accent"
-                    android:textSize="@dimen/text_body"
-                    android:fontFamily="sans-serif-medium" />
+                    android:text="English"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="@color/colorTextHint"
+                    android:contentDescription="Open" />
             </LinearLayout>
 
-            <SeekBar
-                android:id="@+id/seekVolume"
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                android:background="@color/colorMist" android:layout_marginHorizontal="14dp" />
+
+            <!-- Dark Mode row -->
+            <LinearLayout
+                android:id="@+id/rowDarkMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:max="100"
-                android:progress="35"
-                android:progressTint="@color/zen_accent"
-                android:thumbTint="@color/zen_accent" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+
+
+                <TextView
+                    android:id="@+id/tvDarkModeLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dark Mode"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchDarkMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumbTint="@color/colorPrimaryLight"
+                    android:trackTint="@color/colorMist" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                android:background="@color/colorMist" android:layout_marginHorizontal="14dp" />
+
+            <!-- Biometric row -->
+            <LinearLayout
+                android:id="@+id/rowBiometric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+
+
+                <TextView
+                    android:id="@+id/tvBiometricLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Biometric Lock"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchBiometric"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumbTint="@color/colorPrimaryLight"
+                    android:trackTint="@color/colorMist" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                android:background="@color/colorMist" android:layout_marginHorizontal="14dp" />
+
+            <!-- Reminders row -->
+            <LinearLayout
+                android:id="@+id/rowReminders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+                <TextView
+                    android:id="@+id/tvRemindersLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Daily Reminders"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchReminders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumbTint="@color/colorPrimaryLight"
+                    android:trackTint="@color/colorMist" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <!-- Language Row -->
-        <LinearLayout
-            android:id="@+id/rowLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
-
-            <TextView
-                android:id="@+id/tvLanguageLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🌐 Language"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
-
-            <TextView
-                android:id="@+id/tvCurrentLang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="English"
-                android:textColor="@color/zen_accent"
-                android:textSize="@dimen/text_body"
-                android:fontFamily="sans-serif-medium" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:src="@drawable/ic_chevron_right"
-                android:tint="@color/zen_icon_inactive"
-                android:contentDescription="Open" />
-        </LinearLayout>
-
-
-
-
-
-        <!-- Dark Mode Row -->
-        <LinearLayout
-            android:id="@+id/rowDarkMode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
-
-            <TextView
-                android:id="@+id/tvDarkModeLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🌙 Dark Mode"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchDarkMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumbTint="@color/zen_accent"
-                android:trackTint="@color/zen_accent_light" />
-        </LinearLayout>
-
-        <!-- Biometric Lock Row -->
-        <LinearLayout
-            android:id="@+id/rowBiometric"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
-
-            <TextView
-                android:id="@+id/tvBiometricLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🔒 Biometric Lock"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchBiometric"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumbTint="@color/zen_accent"
-                android:trackTint="@color/zen_accent_light" />
-        </LinearLayout>
-        
-        <!-- Backup & Restore Section -->
+        <!-- Section: BACKUP & RESTORE -->
         <TextView
             android:id="@+id/tvBackupLabel"
-            style="@style/ZenLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginBottom="6dp"
             android:text="BACKUP &amp; RESTORE"
-            android:textStyle="bold"
-            android:letterSpacing="0.1" />
+            android:textColor="@color/colorTextHint"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.1"
+            android:textAllCaps="false" />
 
         <LinearLayout
-            android:id="@+id/rowExport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
             android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvExportLabel"
-                android:layout_width="0dp"
+            <!-- Export row -->
+            <LinearLayout
+                android:id="@+id/rowExport"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="📤 Export Data (.plntg)"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+
+
+                <TextView
+                    android:id="@+id/tvExportLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Export Data (.plntg)"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                android:background="@color/colorMist" android:layout_marginHorizontal="14dp" />
+
+            <!-- Import row -->
+            <LinearLayout
+                android:id="@+id/rowImport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+
+
+                <TextView
+                    android:id="@+id/tvImportLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Import Data (.plntg)"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
+            </LinearLayout>
         </LinearLayout>
 
+        <!-- Section: ABOUT -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginBottom="6dp"
+            android:text="ABOUT"
+            android:textColor="@color/colorTextHint"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.1"
+            android:textAllCaps="true" />
+
         <LinearLayout
-            android:id="@+id/rowImport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
             android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvImportLabel"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/rowAbout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="📥 Import Data (.plntg)"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
-        </LinearLayout>
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
 
-        <!-- About Row -->
-        <LinearLayout
-            android:id="@+id/rowAbout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
 
-            <TextView
-                android:id="@+id/tvAboutLabel"
-                android:layout_width="0dp"
+
+                <TextView
+                    android:id="@+id/tvAboutLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="About Plantage"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
+
+                <!-- Version badge chip -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="v1.0"
+                    android:textColor="@color/colorSage"
+                    android:textSize="11sp"
+                    android:background="@drawable/bg_version_chip"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                android:background="@color/colorMist" android:layout_marginHorizontal="14dp" />
+
+            <!-- Github Row -->
+            <LinearLayout
+                android:id="@+id/rowGithub"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ℹ️ About Plantage"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="v1.0"
-                android:textColor="@color/zen_icon_inactive"
-                android:textSize="@dimen/text_label" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_github"
+                    android:layout_marginEnd="10dp"
+                    app:tint="@color/colorTextPrimary" />
 
-        <!-- GitHub Row -->
-        <LinearLayout
-            android:id="@+id/rowGithub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_zen"
-            android:elevation="1dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/pad_card"
-            android:paddingVertical="@dimen/spacing_lg">
+                <TextView
+                    android:id="@+id/tvGithubLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Github Repository"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15sp" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_github"
-                android:tint="@color/zen_text_primary"
-                android:layout_marginEnd="@dimen/spacing_md" />
-
-            <TextView
-                android:id="@+id/tvGithubLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Github"
-                android:textColor="@color/zen_text_primary"
-                android:textSize="@dimen/text_body" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_chevron_right"
-                android:tint="@color/zen_icon_inactive" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="@color/colorTextHint" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

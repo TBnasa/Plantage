@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/zen_bg">
+    android:background="@drawable/bg_splash_gradient">
 
-    <!-- Logo/Icon at center-top with transparent background -->
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp"
-        android:src="@drawable/splash_logo"
-        android:scaleType="fitCenter"
-        android:contentDescription="Plantage Logo" />
-
-    <!-- App Name -->
-    <TextView
-        android:id="@+id/tvAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imgLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:text="Plantage"
-        android:textSize="36sp"
-        android:textColor="@color/zen_accent"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light" />
-
-    <!-- Philosophy Quote -->
-    <TextView
-        android:id="@+id/tvQuote"
+    <!-- Center content -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvAppName"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:text=""
-        android:textSize="18sp"
-        android:textColor="@color/text_secondary"
-        android:textAlignment="center"
-        android:lineSpacingMultiplier="1.4"
-        android:fontFamily="sans-serif-light"
-        android:textStyle="italic" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <!-- Small leaf decoration -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:text="🌱"
-        android:textSize="40sp" />
+        <!-- Logo Badge -->
+        <FrameLayout
+            android:id="@+id/logoContainer"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_logo_badge_cream"
+            android:alpha="0">
 
-</RelativeLayout>
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:src="@drawable/splash_logo" />
+        </FrameLayout>
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Plantage"
+            android:textColor="#F5F3EE"
+            android:textSize="40sp"
+            android:fontFamily="serif"
+            android:alpha="0" />
+
+        <!-- Quote -->
+        <TextView
+            android:id="@+id/tvQuote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:text=""
+            android:textColor="#B0C4B0"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:textAlignment="center"
+            android:lineSpacingMultiplier="1.4"
+            android:fontFamily="sans-serif"
+            android:alpha="0" />
+
+        <!-- Small dot indicator -->
+        <View
+            android:id="@+id/dotIndicator"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_dot_indicator"
+            android:alpha="0" />
+
+    </LinearLayout>
+
+</FrameLayout>

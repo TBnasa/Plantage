@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Init shared services
         lang = new LanguageManager(this);
         dbHelper = new DatabaseHelper(this);
+        lang.scheduleNotifications(lang.isRemindersEnabled());
 
         // Start music service
         Intent musicIntent = new Intent(this, MusicService.class);

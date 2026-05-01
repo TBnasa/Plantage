@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/zen_bg"
+    android:background="@color/colorBackground"
     android:fillViewport="true"
     android:clipToPadding="false">
 
@@ -16,80 +16,143 @@
         android:paddingTop="@dimen/spacing_xl"
         android:paddingBottom="@dimen/spacing_lg">
 
-        <!-- Greeting -->
-        <TextView
-            android:id="@+id/tvGreeting"
-            style="@style/ZenTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Good morning" />
-
-        <TextView
-            android:id="@+id/tvDate"
-            style="@style/ZenBody"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:text="Today" />
-
-        <!-- Countdown -->
+        <!-- Header row: Greeting + Date -->
         <LinearLayout
-            android:id="@+id/layoutCountdown"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
-            android:background="@drawable/bg_card_zen"
-            android:padding="@dimen/spacing_md">
-             <TextView
-                android:id="@+id/tvCountdown"
-                style="@style/ZenBody"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvGreeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Good morning"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="22sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <TextView
+                        android:id="@+id/tvStreakCounter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="1"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22sp"
+                        android:fontFamily="sans-serif-bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Today"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+            <!-- Countdown chip -->
+            <LinearLayout
+                android:id="@+id/layoutCountdown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00:00" />
+                android:background="@drawable/bg_card_zen"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⏱ "
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvCountdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <!-- Plant Memory -->
+        <!-- Plant Memory prompt card -->
         <LinearLayout
             android:id="@+id/cardPlantMemory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginTop="@dimen/spacing_lg"
             android:background="@drawable/bg_card_zen"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/pad_card">
-             <TextView
+            android:paddingHorizontal="@dimen/pad_card"
+            android:paddingVertical="14dp">
+
+            <!-- Green dot indicator -->
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_green_dot"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
                 android:id="@+id/tvPlantHint"
-                style="@style/ZenBody"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Plant a memory..."
-                android:textColor="@color/zen_text_secondary" />
-             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:textColor="@color/colorTextHint"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_chevron_right"
-                app:tint="@color/zen_icon_inactive" />
+                app:tint="@color/colorTextHint" />
         </LinearLayout>
 
         <!-- Tree View -->
         <com.tbnasa.plantage.PlantageTreeView
             android:id="@+id/plantageTreeView"
             android:layout_width="match_parent"
-            android:layout_height="360dp"
-            android:layout_marginTop="@dimen/spacing_xl" />
+            android:layout_height="340dp"
+            android:layout_marginTop="@dimen/spacing_lg" />
 
-        <!-- Section Title -->
+        <!-- Section label: SON ANILAR -->
         <TextView
             android:id="@+id/tvRecentTitle"
-            style="@style/ZenSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Recent Memories" />
+            android:text="Recent Memories"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="11sp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true" />
 
-        <!-- Cards -->
+        <!-- Memory Cards container -->
         <LinearLayout
             android:id="@+id/layoutMemoryCards"
             android:layout_width="match_parent"
@@ -98,15 +161,31 @@
             android:orientation="vertical" />
 
         <!-- Empty State -->
-        <TextView
+        <LinearLayout
             android:id="@+id/tvEmptyState"
-            style="@style/ZenBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
             android:gravity="center"
-            android:text="No memories yet"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌱"
+                android:textSize="32sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="No memories yet"
+                android:textColor="@color/colorTextHint"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

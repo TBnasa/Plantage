@@ -31,7 +31,7 @@ public class SettingsFragment extends Fragment {
 
     private SeekBar seekVolume;
     private TextView tvVolumeValue, tvCurrentLang;
-    private SwitchCompat switchDarkMode, switchBiometric;
+    private SwitchCompat switchDarkMode, switchBiometric, switchReminders;
     private LanguageManager lang;
 
     @Nullable
@@ -54,6 +54,7 @@ public class SettingsFragment extends Fragment {
         tvCurrentLang = view.findViewById(R.id.tvCurrentLang);
         switchDarkMode = view.findViewById(R.id.switchDarkMode);
         switchBiometric = view.findViewById(R.id.switchBiometric);
+        switchReminders = view.findViewById(R.id.switchReminders);
 
         setupVolumeSlider(activity);
         setupLanguageRow(view);
@@ -68,6 +69,7 @@ public class SettingsFragment extends Fragment {
         TextView tvSettingsSubtitle = view.findViewById(R.id.tvSettingsSubtitle);
         TextView tvDarkModeLabel = view.findViewById(R.id.tvDarkModeLabel);
         TextView tvBiometricLabel = view.findViewById(R.id.tvBiometricLabel);
+        TextView tvRemindersLabel = view.findViewById(R.id.tvRemindersLabel);
         TextView tvGithubLabel = view.findViewById(R.id.tvGithubLabel);
 
         if (tvPrefsLabel != null) tvPrefsLabel.setText(lang.getPreferences());
@@ -77,6 +79,7 @@ public class SettingsFragment extends Fragment {
         if (tvSettingsSubtitle != null) tvSettingsSubtitle.setText(lang.getYourGarden());
         if (tvDarkModeLabel != null) tvDarkModeLabel.setText(lang.getDarkModeLabel());
         if (tvBiometricLabel != null) tvBiometricLabel.setText(lang.getBiometricLabel());
+        if (tvRemindersLabel != null) tvRemindersLabel.setText(lang.getRemindersLabel());
         if (tvGithubLabel != null) tvGithubLabel.setText(lang.getGithubLabel());
 
         setupBackupSection(view);
@@ -84,7 +87,7 @@ public class SettingsFragment extends Fragment {
         LinearLayout rowGithub = view.findViewById(R.id.rowGithub);
         if (rowGithub != null) {
             rowGithub.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/TBnasa/Plantage"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/TBnasa/Plantage"));
                 startActivity(intent);
             });
         }
@@ -131,6 +134,13 @@ public class SettingsFragment extends Fragment {
             switchBiometric.setChecked(lang.isBiometricEnabled());
             switchBiometric.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 lang.setBiometricEnabled(isChecked);
+            });
+        }
+
+        if (switchReminders != null) {
+            switchReminders.setChecked(lang.isRemindersEnabled());
+            switchReminders.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                lang.setRemindersEnabled(isChecked);
             });
         }
     }
@@ -194,6 +204,8 @@ public class SettingsFragment extends Fragment {
         final EditText input = new EditText(requireContext());
         input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
         input.setHint("****");
+        input.setTextColor(getResources().getColor(R.color.colorTextPrimary, null));
+        input.setHintTextColor(getResources().getColor(R.color.colorTextHint, null));
         input.setBackgroundResource(R.drawable.bg_input_zen);
         int pad = (int) (12 * getResources().getDisplayMetrics().density);
         input.setPadding(pad, pad, pad, pad);

@@ -19,6 +19,7 @@ public class LanguageManager {
     private static final String KEY_LANGUAGE = "language";
     private static final String KEY_DARK_MODE = "dark_mode";
     private static final String KEY_BIOMETRIC = "biometric_enabled";
+    private static final String KEY_REMINDERS = "reminders_enabled";
 
     public static final String LANG_TR = "tr";
     public static final String LANG_EN = "en";
@@ -58,7 +59,7 @@ public class LanguageManager {
     }
 
     public boolean isDarkMode() {
-        return prefs.getBoolean(KEY_DARK_MODE, false);
+        return prefs.getBoolean(KEY_DARK_MODE, true);
     }
 
     public void setDarkMode(boolean enabled) {
@@ -72,6 +73,28 @@ public class LanguageManager {
 
     public void setBiometricEnabled(boolean enabled) {
         prefs.edit().putBoolean(KEY_BIOMETRIC, enabled).apply();
+    }
+
+    public boolean isRemindersEnabled() {
+        return prefs.getBoolean(KEY_REMINDERS, true);
+    }
+
+    public void setRemindersEnabled(boolean enabled) {
+        prefs.edit().putBoolean(KEY_REMINDERS, enabled).apply();
+        scheduleNotifications(enabled);
+    }
+
+    public void scheduleNotifications(boolean enabled) {
+        androidx.work.WorkManager wm = androidx.work.WorkManager.getInstance(context);
+        if (enabled) {
+            androidx.work.PeriodicWorkRequest request = new androidx.work.PeriodicWorkRequest.Builder(
+                    NotificationWorker.class, 5, java.util.concurrent.TimeUnit.HOURS)
+                    .build();
+            wm.enqueueUniquePeriodicWork("garden_reminders", 
+                    androidx.work.ExistingPeriodicWorkPolicy.UPDATE, request);
+        } else {
+            wm.cancelUniqueWork("garden_reminders");
+        }
     }
 
     public void applyTheme() {
@@ -151,6 +174,7 @@ public class LanguageManager {
     public String getPreferences() { return context.getString(R.string.preferences); }
     public String getDarkModeLabel() { return context.getString(R.string.dark_mode); }
     public String getBiometricLabel() { return context.getString(R.string.biometric_lock); }
+    public String getRemindersLabel() { return context.getString(R.string.reminders_label); }
     public String getGithubLabel() { return context.getString(R.string.github_repo); }
     public String getSupportDeveloper() { return context.getString(R.string.support_developer); }
     public String getAboutApp() { return context.getString(R.string.about_app); }

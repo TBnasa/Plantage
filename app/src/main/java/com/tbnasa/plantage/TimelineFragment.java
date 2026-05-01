@@ -40,9 +40,9 @@ import java.util.Locale;
 public class TimelineFragment extends Fragment {
 
     private PlantageTreeView treeView;
-    private TextView tvGreeting, tvDate, tvCountdown;
+    private TextView tvGreeting, tvDate, tvCountdown, tvStreakCounter;
     private LinearLayout cardPlantMemory, layoutMemoryCards, layoutCountdown;
-    private TextView tvEmptyState;
+    private View tvEmptyState;
     // Removed filtering fields
 
     private DatabaseHelper dbHelper;
@@ -77,8 +77,7 @@ public class TimelineFragment extends Fragment {
         cardPlantMemory = view.findViewById(R.id.cardPlantMemory);
         layoutMemoryCards = view.findViewById(R.id.layoutMemoryCards);
         treeView = view.findViewById(R.id.plantageTreeView);
-        // layoutFilterBanner and btnClearFilter removed
-        tvEmptyState = view.findViewById(R.id.tvEmptyState);
+        tvStreakCounter = view.findViewById(R.id.tvStreakCounter);
 
         setupGreeting();
         setupCountdown();
@@ -93,8 +92,6 @@ public class TimelineFragment extends Fragment {
         TextView tvRecentTitle = view.findViewById(R.id.tvRecentTitle);
         if (tvRecentTitle != null)
             tvRecentTitle.setText(lang.getRecentMemories());
-        if (tvEmptyState != null)
-            tvEmptyState.setText("No memories yet"); // Hardcoded as method removed from LanguageManager
     }
 
     private void setupGreeting() {
@@ -111,6 +108,30 @@ public class TimelineFragment extends Fragment {
         }
         tvGreeting.setText(greeting);
         tvDate.setText(DISPLAY_DATE.format(new Date()));
+
+        // Streak calculation
+        List<Leaf> leaves = dbHelper.getAllLeaves();
+        int streak = 0;
+        Calendar streakCal = Calendar.getInstance();
+        for (int i = 0; i < 365; i++) {
+            String dateStr = DATE_FORMAT.format(streakCal.getTime());
+            boolean found = false;
+            for (Leaf leaf : leaves) {
+                if (dateStr.equals(leaf.date) && leaf.hasContent()) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                streak++;
+                streakCal.add(Calendar.DAY_OF_YEAR, -1);
+            } else {
+                break;
+            }
+        }
+        if (tvStreakCounter != null) {
+            tvStreakCounter.setText(String.valueOf(streak));
+        }
     }
 
     private void setupCountdown() {
@@ -440,6 +461,7 @@ public class TimelineFragment extends Fragment {
                 dbHelper.updateLeafContent(leaf.id, newContent);
                 leaf.content = newContent;
                 Toast.makeText(ctx, lang.getMemorySaved(), Toast.LENGTH_SHORT).show();
+                PlantageWidgetProvider.refreshAllWidgets(ctx);
                 loadTreeData();
                 loadRecentMemories();
             });
@@ -530,6 +552,7 @@ public class TimelineFragment extends Fragment {
                 String newPaths = leaf.addImagePath(outFile.getAbsolutePath());
                 dbHelper.updateLeafImages(leafId, newPaths);
                 Toast.makeText(ctx, lang.getPhotoAdded(), Toast.LENGTH_SHORT).show();
+                PlantageWidgetProvider.refreshAllWidgets(ctx);
                 loadTreeData();
                 loadRecentMemories();
             }

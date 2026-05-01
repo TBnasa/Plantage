@@ -1,38 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme — Plantage Zen / Organic Canvas -->
+    <!-- Base application theme — Plantage Premium -->
     <style name="Theme.OrbitFocus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color — Muted Sage Green -->
-        <item name="colorPrimary">@color/zen_accent</item>
-        <item name="colorPrimaryVariant">@color/zen_accent_dark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
-
-        <!-- Secondary — Warm sand accent -->
-        <item name="colorSecondary">@color/zen_accent</item>
-        <item name="colorSecondaryVariant">@color/zen_accent_dark</item>
+        <item name="colorSecondary">@color/colorPrimaryLight</item>
+        <item name="colorSecondaryVariant">@color/colorPrimary</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Background — Soft Cream canvas -->
-        <item name="android:windowBackground">@color/zen_bg</item>
-        <item name="android:colorBackground">@color/zen_bg</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
 
-        <!-- Status bar — blends with cream bg -->
-        <item name="android:statusBarColor">@color/zen_bg</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <!-- Status bar — deep forest -->
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
 
-        <!-- Navigation bar — matches paper surface -->
-        <item name="android:navigationBarColor">@color/zen_surface</item>
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/colorBackground</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
 
-        <!-- Text — Ink on paper -->
-        <item name="android:textColorPrimary">@color/zen_text_primary</item>
-        <item name="android:textColorSecondary">@color/zen_text_secondary</item>
+        <!-- Typography -->
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+
+        <!-- Material components defaults -->
+        <item name="materialCardViewStyle">@style/PremiumCard</item>
+        <item name="bottomNavigationStyle">@style/PremiumBottomNav</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <!-- Splash theme -->
+    <!-- Splash theme — full dark -->
     <style name="Theme.OrbitFocus.NoActionBar" parent="Theme.OrbitFocus">
         <item name="android:windowFullscreen">false</item>
-        <item name="android:statusBarColor">@color/zen_bg</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
 </resources>
