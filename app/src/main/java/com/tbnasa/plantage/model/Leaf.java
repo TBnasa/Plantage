@@ -1,4 +1,4 @@
-package com.example.orbitfocus.model;
+package com.tbnasa.plantage.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,16 +17,44 @@ public class Leaf {
     public String imagePaths; // Virgülle ayrılmış fotoğraf/video yolları
     public LeafStatus status; // Yaprak durumu
     public long createdAt; // Oluşturulma zamanı (millis)
+    // Category removed
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public Leaf(long id, String date, String content, String imagePaths, LeafStatus status) {
+    public Leaf(long id, String date, String content, String imagePaths, LeafStatus status, long createdAt) {
         this.id = id;
         this.date = date;
         this.content = content;
         this.imagePaths = imagePaths;
         this.status = status;
-        this.createdAt = System.currentTimeMillis();
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * Yaprağın büyüme ilerlemesini döndürür (0.0 - 1.0).
+     */
+    public float getGrowthProgress() {
+        try {
+            Date leafDate = dateFormat.parse(this.date);
+            if (leafDate == null) return 1.0f;
+
+            long targetStartMillis = leafDate.getTime();
+            long now = System.currentTimeMillis();
+
+            // Eğer bu yarının yaprağıysa, bugünün başlangıcından yarına kadar büyür
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(leafDate);
+            cal.add(Calendar.DAY_OF_YEAR, -1);
+            long growthStartMillis = cal.getTimeInMillis();
+
+            if (now < growthStartMillis) return 0.05f; // Çok küçük
+            if (now >= targetStartMillis) return 1.0f; // Tamamlandı
+
+            float progress = (float) (now - growthStartMillis) / (24 * 60 * 60 * 1000f);
+            return Math.min(1.0f, Math.max(0.05f, progress));
+        } catch (Exception e) {
+            return 1.0f;
+        }
     }
 
     /**
@@ -35,6 +63,16 @@ public class Leaf {
     public boolean isToday() {
         String today = dateFormat.format(new Date());
         return today.equals(this.date);
+    }
+
+    /**
+     * Bu yaprak yarına mı ait?
+     */
+    public boolean isTomorrow() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        String tomorrow = dateFormat.format(cal.getTime());
+        return tomorrow.equals(this.date);
     }
 
     /**
@@ -76,8 +114,21 @@ public class Leaf {
     }
 
     /**
+     * Yaprağın büyüme süresinin dolup dolmadığını kontrol eder.
+     */
+    public boolean isMature() {
+        try {
+            Date leafDate = dateFormat.parse(this.date);
+            if (leafDate == null) return true;
+            return System.currentTimeMillis() >= leafDate.getTime();
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
+    /**
      * Yaprağın deadline'ı geçip geçmediğini kontrol eder.
-     * Deadline: Yaprağın tarihinden sonraki gün saat 09:00
+     * Deadline: Yaprak gününden sonraki gece yarısı
      */
     public boolean isDeadlinePassed() {
         try {
@@ -88,7 +139,7 @@ public class Leaf {
             Calendar deadline = Calendar.getInstance();
             deadline.setTime(leafDate);
             deadline.add(Calendar.DAY_OF_YEAR, 1);
-            deadline.set(Calendar.HOUR_OF_DAY, 0); // Gece yarısı 00:00
+            deadline.set(Calendar.HOUR_OF_DAY, 0);
             deadline.set(Calendar.MINUTE, 0);
             deadline.set(Calendar.SECOND, 0);
 
@@ -101,33 +152,31 @@ public class Leaf {
 
     /**
      * Yaprağın güncel durumunu hesaplar ve döndürür.
-     * Bu metod çağrıldığında mevcut zamana göre durum güncellenir.
-     * NOT: Eğer yaprak zaten WITHERED veya LOCKED ise, durumu değişmez.
      */
     public LeafStatus calculateCurrentStatus() {
-        // Eğer yaprak zaten WITHERED ise (manuel silme dahil), durumu koru
-        if (this.status == LeafStatus.WITHERED) {
-            return LeafStatus.WITHERED;
+        if (this.status == LeafStatus.WITHERED || this.status == LeafStatus.LOCKED) {
+            return this.status;
         }
 
-        // Eğer yaprak LOCKED ise (ölümsüz), durumu koru
-        if (this.status == LeafStatus.LOCKED) {
-            return LeafStatus.LOCKED;
+        // 1. Yarının yaprağı mı? -> Büyüyor
+        if (isTomorrow()) {
+            return LeafStatus.GROWING;
         }
 
-        // ACTIVE yapraklar için deadline kontrolü yap
-        if (!isDeadlinePassed()) {
-            // Deadline henüz geçmedi - hala ACTIVE
+        // 2. Bugünün yaprağı mı? -> Aktif
+        if (isToday()) {
             return LeafStatus.ACTIVE;
-        } else {
-            // Deadline geçti
+        }
+
+        // 3. Geçmiş yaprak mı?
+        if (isDeadlinePassed()) {
             if (hasContent()) {
-                // İçerik var - LOCKED (kilitli/ölümsüz)
                 return LeafStatus.LOCKED;
             } else {
-                // İçerik yok - WITHERED (kurumuş)
                 return LeafStatus.WITHERED;
             }
         }
+
+        return LeafStatus.ACTIVE;
     }
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">⚙️ Einstellungen</string>
+    <string name="music_volume">🔊 Musiklautstärke</string>
+    <string name="language">🌐 Sprache</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="save">Speichern</string>
+    <string name="close">Schließen</string>
+    <string name="delete">🗑️ Löschen</string>
+    <string name="next_leaf">Nächstes Blatt</string>
+    <string name="photos">📷 Fotos</string>
+    <string name="add_photo">+ Foto hinzufügen</string>
+    <string name="write_memory">📝 Schreibe deine Erinnerung</string>
+    <string name="what_happened_today">Was ist heute passiert?</string>
+    <string name="memory_saved">Erinnerung gespeichert! 🌿</string>
+    <string name="photo_added">Foto hinzugefügt!</string>
+    <string name="photo_deleted">Foto gelöscht</string>
+    <string name="leaf_withered">Blatt verwelkt 🍂</string>
+    <string name="active_leaf_title">🌱 Heutiges Blatt</string>
+    <string name="locked_leaf_title">🔒 Gesperrte Erinnerung</string>
+    <string name="withered_leaf_title">🍂 Verwelktes Blatt</string>
+    <string name="locked_memory_info">🔒 Diese Erinnerung ist gesperrt und für immer bewahrt.</string>
+    <string name="note">📝 Notiz</string>
+    <string name="missed_this_day">Du hast diesen Tag verpasst...</string>
+    <string name="no_memory_added">Keine Erinnerung wurde hinzugefügt und das Blatt ist verwelkt.</string>
+    <string name="understood">Verstanden</string>
+    <string name="delete_leaf_title">🗑️ Blatt löschen</string>
+    <string name="delete_confirmation">Bist du sicher, dass du dieses Blatt löschen möchtest?</string>
+    <string name="yes_delete">Ja, löschen</string>
+    <string name="language_changed">Sprache geändert...</string>
+    <string name="good_morning">Guten Morgen 🌿</string>
+    <string name="good_afternoon">Guten Tag 🌿</string>
+    <string name="good_evening">Guten Abend 🌿</string>
+    <string name="plant_a_memory">🌱 Pflanze eine Erinnerung...</string>
+    <string name="recent_memories">Neueste Erinnerungen</string>
+    <string name="active_status">🌱 Aktiv</string>
+    <string name="locked_status">🔒 Gesperrt</string>
+    <string name="withered_status">🍂 Verwelkt</string>
+    <string name="leaf_status_label">Blattstatus</string>
+    <string name="streak">Serie</string>
+    <string name="total_memories_label">Erinnerungen</string>
+    <string name="words_written">Geschriebene Wörter</string>
+    <string name="preferences">EINSTELLUNGEN</string>
+    <string name="support_developer">☕ Entwickler unterstützen</string>
+    <string name="about_app">ℹ️ Über Plantage</string>
+    <string name="your_garden">Dein Achtsamkeitsgarten</string>
+    <string-array name="quotes">
+        <item>Unsere Erinnerungen sind ein Baum, der wächst, wenn wir ihn pflegen.</item>
+        <item>Eine heute gepflanzte Erinnerung wird morgen ein Baum, unter dem du ruhen kannst.</item>
+        <item>Je tiefer unsere Wurzeln reichen, desto höher streben unsere Äste zum Himmel.</item>
+        <item>Die Zeit vergeht, aber Erinnerungen schlagen dort Wurzeln, wo sie stehen.</item>
+        <item>Die Vergangenheit ist der Boden von heute; was du säst, wird in deiner Zukunft blühen.</item>
+        <item>Jeder gelebte Tag ist ein starker Ring am Stamm des Lebensbaums.</item>
+        <item>Selbst die mächtigsten Wälder beginnen mit einem stillen Samen.</item>
+        <item>Jede Erinnerung, die die Seele nährt, ist ein Blatt, das nie verwelkt.</item>
+        <item>Jeder Ast, der mit Geduld wächst, ist das größte Geschenk der Zeit.</item>
+        <item>Ein Blatt, das sich heute öffnet, ist die Geschichte von morgen.</item>
+        <item>Das Leben lässt sich nicht hetzen; wie ein Baum wächst es Tag für Tag.</item>
+        <item>Jedes zu Papier gebrachte Wort ist ein Samen, der in die Ewigkeit geworfen wird.</item>
+        <item>Deine Geschichte ist das Lebenselixier dieses Baumes.</item>
+        <item>Lass es nicht verblassen; jeder Moment verdient es, ein Blatt zu sein.</item>
+        <item>Still gesammelte Erinnerungen sind unsere Zuflucht in den lautesten Zeiten.</item>
+        <item>Kein Blatt gleicht dem anderen, genau wie deine einzigartigen Erinnerungen.</item>
+    </string-array>
+</resources>

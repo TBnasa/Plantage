@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#406B8A7F">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Muted Sage Green — the living primary action -->
+            <solid android:color="@color/zen_accent" />
+            <corners android:radius="@dimen/radius_button" />
+        </shape>
+    </item>
+</ripple>

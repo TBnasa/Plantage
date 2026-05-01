@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════ Zen Spacing System — Breathing Room ═══════ -->
+
+    <!-- Border Radii — Uniform organic roundness -->
+    <dimen name="radius_card">24dp</dimen>
+    <dimen name="radius_button">20dp</dimen>
+    <dimen name="radius_input">16dp</dimen>
+    <dimen name="radius_pill">20dp</dimen>
+
+    <!-- Screen Padding — Generous air -->
+    <dimen name="pad_screen">24dp</dimen>
+    <dimen name="pad_screen_h">24dp</dimen>
+
+    <!-- Card Internals — Breathing room inside cards -->
+    <dimen name="pad_card">20dp</dimen>
+    <dimen name="pad_card_large">24dp</dimen>
+
+    <!-- Element Spacing -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">14dp</dimen>
+    <dimen name="spacing_lg">20dp</dimen>
+    <dimen name="spacing_xl">28dp</dimen>
+    <dimen name="spacing_xxl">40dp</dimen>
+
+    <!-- Button -->
+    <dimen name="btn_height">52dp</dimen>
+    <dimen name="btn_pad_h">24dp</dimen>
+
+    <!-- Bottom Nav -->
+    <dimen name="bottom_nav_height">68dp</dimen>
+
+    <!-- Typography Sizes -->
+    <dimen name="text_title">24sp</dimen>
+    <dimen name="text_section">18sp</dimen>
+    <dimen name="text_body">15sp</dimen>
+    <dimen name="text_label">13sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+</resources>

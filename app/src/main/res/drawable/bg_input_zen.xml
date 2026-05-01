@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#20808080" />
-    <corners android:radius="@dimen/radius_button" />
+    <!-- Warm parchment input field -->
+    <solid android:color="@color/zen_input_bg" />
+    <corners android:radius="@dimen/radius_input" />
 </shape>

@@ -1,4 +1,4 @@
-package com.example.orbitfocus;
+package com.tbnasa.plantage;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,18 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
-import com.example.orbitfocus.model.Leaf;
-import com.example.orbitfocus.model.LeafStatus;
+import com.tbnasa.plantage.model.Garden;
+import com.tbnasa.plantage.model.Leaf;
+import com.tbnasa.plantage.model.LeafStatus;
 
 /**
  * Plantage veritabanı yöneticisi.
- * Yaprak (Leaf) verilerini SQLite'da saklar.
+ * Yaprak (Leaf) ve Bahçe (Garden) verilerini SQLite'da saklar.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Plantage.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
+    // ─── Leaves table ───
     private static final String TABLE_LEAVES = "leaves";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_DATE = "date";
@@ -27,13 +29,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_STATUS = "status";
     private static final String COLUMN_CREATED_AT = "created_at";
 
-    private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_LEAVES + "("
+    private static final String CREATE_LEAVES = "CREATE TABLE " + TABLE_LEAVES + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_DATE + " TEXT UNIQUE,"
             + COLUMN_CONTENT + " TEXT,"
             + COLUMN_IMAGES + " TEXT,"
             + COLUMN_STATUS + " TEXT DEFAULT 'ACTIVE',"
-            + COLUMN_CREATED_AT + " INTEGER"
+            + COLUMN_CREATED_AT + " INTEGER" // Category removed
             + ")";
 
     public DatabaseHelper(Context context) {
@@ -42,16 +44,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_LEAVES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS tasks");
-        db.execSQL("DROP TABLE IF EXISTS memories");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEAVES);
-        onCreate(db);
+        if (oldVersion < 6) {
+            // Gardens removal - no op
+        }
     }
+
+    // Seed methods removed
+
+    // ═══════ LEAF OPERATIONS ═══════
 
     /**
      * Yeni yaprak oluşturur.
@@ -62,8 +67,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DATE, date);
         values.put(COLUMN_CONTENT, "");
         values.put(COLUMN_IMAGES, "");
-        values.put(COLUMN_STATUS, LeafStatus.ACTIVE.name());
+        values.put(COLUMN_STATUS, LeafStatus.GROWING.name());
         values.put(COLUMN_CREATED_AT, System.currentTimeMillis());
+        // Category default is handled by ignoring it (or removed column)
         long id = db.insertWithOnConflict(TABLE_LEAVES, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         db.close();
         return id;
@@ -102,6 +108,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Category query methods removed
+
     /**
      * Tarihe göre yaprak getirir.
      */
@@ -132,10 +140,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Leaf leaf = cursorToLeaf(cursor);
-                // Durumu dinamik olarak hesapla
                 LeafStatus currentStatus = leaf.calculateCurrentStatus();
                 if (leaf.status != currentStatus) {
-                    // Durum değişti, veritabanını güncelle
                     updateLeafStatus(leaf.id, currentStatus);
                     leaf.status = currentStatus;
                 }
@@ -156,14 +162,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String content = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT));
         String images = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGES));
         String statusStr = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS));
+        long createdAt = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CREATED_AT));
 
         LeafStatus status;
         try {
             status = LeafStatus.valueOf(statusStr);
         } catch (Exception e) {
-            status = LeafStatus.ACTIVE;
+            status = LeafStatus.GROWING;
         }
 
-        return new Leaf(id, date, content, images, status);
+        return new Leaf(id, date, content, images, status, createdAt);
     }
 }

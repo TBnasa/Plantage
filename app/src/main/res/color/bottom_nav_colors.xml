@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Active: Muted Sage Green — clearly alive, not harsh -->
+    <item android:color="@color/zen_accent" android:state_checked="true" />
+    <!-- Inactive: Soft neutral — visually quiet -->
+    <item android:color="@color/zen_icon_inactive" />
+</selector>

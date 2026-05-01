@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">⚙️ Paramètres</string>
+    <string name="music_volume">🔊 Volume</string>
+    <string name="language">🌐 Langue</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="save">Enregistrer</string>
+    <string name="close">Fermer</string>
+    <string name="delete">🗑️ Supprimer</string>
+    <string name="next_leaf">Prochaine feuille</string>
+    <string name="photos">📷 Photos</string>
+    <string name="add_photo">+ Ajouter photo</string>
+    <string name="write_memory">📝 Écris ton souvenir</string>
+    <string name="what_happened_today">Que s\'est-il passé aujourd\'hui ?</string>
+    <string name="memory_saved">Souvenir enregistré ! 🌿</string>
+    <string name="photo_added">Photo ajoutée !</string>
+    <string name="photo_deleted">Photo supprimée</string>
+    <string name="leaf_withered">Feuille fanée 🍂</string>
+    <string name="active_leaf_title">🌱 Feuille du jour</string>
+    <string name="locked_leaf_title">🔒 Souvenir verrouillé</string>
+    <string name="withered_leaf_title">🍂 Feuille fanée</string>
+    <string name="locked_memory_info">🔒 Ce souvenir est verrouillé et préservé pour toujours.</string>
+    <string name="note">📝 Note</string>
+    <string name="missed_this_day">Tu as manqué ce jour...</string>
+    <string name="no_memory_added">Aucun souvenir n\'a été ajouté et la feuille a fané.</string>
+    <string name="understood">J\'ai compris</string>
+    <string name="delete_leaf_title">🗑️ Supprimer feuille</string>
+    <string name="delete_confirmation">Es-tu sûr de vouloir supprimer cette feuille ?</string>
+    <string name="yes_delete">Oui, supprimer</string>
+    <string name="language_changed">Langue changée...</string>
+    <string name="good_morning">Bonjour 🌿</string>
+    <string name="good_afternoon">Bon après-midi 🌿</string>
+    <string name="good_evening">Bonsoir 🌿</string>
+    <string name="plant_a_memory">🌱 Plante un souvenir...</string>
+    <string name="recent_memories">Souvenirs récents</string>
+    <string name="active_status">🌱 Actif</string>
+    <string name="locked_status">🔒 Verrouillé</string>
+    <string name="withered_status">🍂 Fané</string>
+    <string name="leaf_status_label">État des feuilles</string>
+    <string name="streak">Série</string>
+    <string name="total_memories_label">Total souvenirs</string>
+    <string name="words_written">Mots écrits</string>
+    <string name="preferences">PRÉFÉRENCES</string>
+    <string name="support_developer">☕ Soutenir le développeur</string>
+    <string name="about_app">ℹ️ À propos de Plantage</string>
+    <string name="your_garden">Ton jardin de pleine conscience</string>
+    <string-array name="quotes">
+        <item>Nos souvenirs sont un arbre qui grandit à mesure que nous les nourrissons.</item>
+        <item>Un souvenir planté aujourd\'hui deviendra l\'arbre sous lequel tu te reposeras demain.</item>
+        <item>Plus nos racines s\'enfoncent, plus nos branches s\'élèvent vers le ciel.</item>
+        <item>Le temps passe, mais les souvenirs s\'enracinent là où ils se trouvent.</item>
+        <item>Le passé est le terreau d\'aujourd\'hui ; ce que tu sèmes fleurira dans ton avenir.</item>
+        <item>Chaque jour vécu est un anneau solide ajouté au tronc de l\'arbre de vie.</item>
+        <item>Même les forêts les plus majestueuses commencent par une graine silencieuse.</item>
+        <item>Chaque souvenir qui nourrit l\'âme est une feuille qui ne fane jamais.</item>
+        <item>Chaque branche qui grandit avec patience est le plus beau cadeau du temps.</item>
+        <item>Une feuille qui s\'ouvre aujourd\'hui est l\'histoire de demain.</item>
+        <item>La vie ne peut être pressée ; comme un arbre, elle grandit jour après jour.</item>
+        <item>Chaque mot couché sur papier est une graine jetée dans l\'éternité.</item>
+        <item>Ton histoire est la sève de cet arbre.</item>
+        <item>Ne la laisse pas s\'effacer ; chaque moment mérite d\'être une feuille.</item>
+        <item>Les souvenirs silencieusement rassemblés sont notre refuge dans les moments les plus bruyants.</item>
+        <item>Aucune feuille ne ressemble à une autre, tout comme tes souvenirs uniques.</item>
+    </string-array>
+</resources>

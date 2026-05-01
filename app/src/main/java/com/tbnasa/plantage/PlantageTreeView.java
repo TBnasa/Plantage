@@ -1,4 +1,4 @@
-package com.example.orbitfocus;
+package com.tbnasa.plantage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,8 +14,8 @@ import android.view.View;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import com.example.orbitfocus.model.Leaf;
-import com.example.orbitfocus.model.LeafStatus;
+import com.tbnasa.plantage.model.Leaf;
+import com.tbnasa.plantage.model.LeafStatus;
 
 /**
  * PlantageTreeView - Fraktal Ağaç Custom View
@@ -44,31 +44,35 @@ public class PlantageTreeView extends View {
     private Paint shadowPaint;
     private Paint textPaint;
 
-    // ==================== COLOR PALETTE - AÇIK YEŞİL ====================
-    private static final int COLOR_BACKGROUND = Color.WHITE;
+    // ==================== COLOR PALETTE - VIBRANT GREEN ====================
+    private static final int COLOR_BACKGROUND = Color.parseColor("#FDFDFB");
 
-    // Gövde - Açık Yeşil
-    private static final int COLOR_STEM = Color.rgb(102, 187, 106);
+    // Gövde - Forest Green (canlı)
+    private static final int COLOR_STEM = Color.parseColor("#27AE60");
 
-    // Yapraklar - Mint & Pastel Yeşil
-    private static final int COLOR_LEAF_LIGHT = Color.rgb(165, 214, 167);
-    private static final int COLOR_LEAF_DARK = Color.rgb(129, 199, 132);
+    // Yapraklar - Vibrant Emerald
+    private static final int COLOR_LEAF_LIGHT = Color.parseColor("#40D47E");
+    private static final int COLOR_LEAF_DARK = Color.parseColor("#2ECC71");
 
-    // Solmuş Yapraklar
-    private static final int COLOR_WITHERED_LIGHT = Color.rgb(188, 170, 164);
-    private static final int COLOR_WITHERED_DARK = Color.rgb(161, 136, 127);
+    // Büyüyen Yapraklar - Pale Green (Semi-transparent)
+    private static final int COLOR_GROWING_LIGHT = Color.parseColor("#A9DFBF");
+    private static final int COLOR_GROWING_DARK = Color.parseColor("#7DCEA0");
 
-    // Kilitli Yapraklar
-    private static final int COLOR_LOCKED_LIGHT = Color.rgb(200, 200, 200);
-    private static final int COLOR_LOCKED_DARK = Color.rgb(170, 170, 170);
+    // Solmuş Yapraklar - Warm Sand
+    private static final int COLOR_WITHERED_LIGHT = Color.parseColor("#D4C5B0");
+    private static final int COLOR_WITHERED_DARK = Color.parseColor("#B8A995");
 
-    // Saksı - Klasik Terracotta
-    private static final int COLOR_POT_MAIN = Color.rgb(194, 125, 95);
-    private static final int COLOR_POT_RIM = Color.rgb(220, 160, 130);
-    private static final int COLOR_SOIL = Color.rgb(100, 72, 60);
+    // Kilitli Yapraklar - Deep Emerald
+    private static final int COLOR_LOCKED_LIGHT = Color.parseColor("#58D68D");
+    private static final int COLOR_LOCKED_DARK = Color.parseColor("#1E8449");
 
-    // Gölge
-    private static final int COLOR_SHADOW = Color.argb(40, 0, 0, 0);
+    // Saksı - Muted Terracotta
+    private static final int COLOR_POT_MAIN = Color.parseColor("#C4A68C");
+    private static final int COLOR_POT_RIM = Color.parseColor("#D4BCA6");
+    private static final int COLOR_SOIL = Color.parseColor("#8B7355");
+
+    // Gölge - Very Subtle
+    private static final int COLOR_SHADOW = Color.argb(20, 0, 0, 0);
 
     // ==================== DIMENSIONS ====================
     private static final float POT_HEIGHT = 100f;
@@ -211,6 +215,9 @@ public class PlantageTreeView extends View {
         potRimPaint.setColor(Color.rgb(210, 120, 90));
         drawPotRim(canvas, centerX, potTopY);
         canvas.restore();
+
+        // Refresh periodically for growth animation (every 5 mins)
+        postInvalidateDelayed(300000);
     }
 
     // ==================== SHADOW ====================
@@ -318,10 +325,22 @@ public class PlantageTreeView extends View {
      * Actual Leaf Drawing (With specific angle)
      */
     private void drawLogoLeaf(Canvas canvas, float stemX, float stemY, int index, Leaf leaf, float scale, float angle) {
+        // Apply Growth Scale if status is GROWING
+        float leafScale = scale;
+        if (leaf.status == LeafStatus.GROWING) {
+            // Min scale 0.1, max 1.0 based on time
+            float progress = leaf.getGrowthProgress();
+            leafScale *= (0.1f + (progress * 0.9f));
+        }
+
         // Status Colors
         int lightColor = COLOR_LEAF_LIGHT;
         int darkColor = COLOR_LEAF_DARK;
-        if (leaf.status == LeafStatus.WITHERED) {
+
+        if (leaf.status == LeafStatus.GROWING) {
+            lightColor = COLOR_GROWING_LIGHT;
+            darkColor = COLOR_GROWING_DARK;
+        } else if (leaf.status == LeafStatus.WITHERED) {
             lightColor = COLOR_WITHERED_LIGHT;
             darkColor = COLOR_WITHERED_DARK;
         } else if (leaf.status == LeafStatus.LOCKED) {
@@ -332,16 +351,15 @@ public class PlantageTreeView extends View {
         leafLightPaint.setColor(lightColor);
         leafDarkPaint.setColor(darkColor);
 
-        float h = 110f * scale;
-        float w = 55f * scale;
+        float h = 110f * leafScale;
+        float w = 55f * leafScale;
 
         canvas.save();
         canvas.translate(stemX, stemY);
         canvas.rotate(angle);
 
         // Use a stem offset so leaf doesn't overlap main stem weirdly
-        // Move out slightly
-        float offset = 8f;
+        float offset = 8f * leafScale;
         canvas.translate(0, -offset);
 
         // Shape: Broad oval
@@ -361,18 +379,18 @@ public class PlantageTreeView extends View {
         if (leaf.status == LeafStatus.ACTIVE) {
             String img = leaf.getFirstImage();
             if (img != null && !img.isEmpty()) {
-                drawThumbnail(canvas, -h * 0.45f, img, scale);
+                drawThumbnail(canvas, -h * 0.45f, img, leafScale);
             } else {
                 textPaint.setAlpha(220);
-                textPaint.setTextSize(24f * scale);
+                textPaint.setTextSize(24f * leafScale);
                 canvas.drawText("+", 0, -h * 0.45f, textPaint);
             }
         }
 
         canvas.restore();
 
-        // Hitbox (only if real leaf)
-        if (index >= 0) {
+        // Hitbox (only if real leaf and NOT growing - user can't click growing leaf)
+        if (index >= 0 && leaf.status != LeafStatus.GROWING) {
             clickZones.add(new LeafHitBox(stemX, stemY, 70f * scale, index));
         }
     }

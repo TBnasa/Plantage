@@ -1,4 +1,4 @@
-package com.example.orbitfocus.model;
+package com.tbnasa.plantage.model;
 
 public class Memory {
     public long id;

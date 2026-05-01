@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">⚙️ Настройки</string>
+    <string name="music_volume">🔊 Громкость</string>
+    <string name="language">🌐 Язык</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="close">Закрыть</string>
+    <string name="delete">🗑️ Удалить</string>
+    <string name="next_leaf">Следующий лист</string>
+    <string name="photos">📷 Фотографии</string>
+    <string name="add_photo">+ Добавить фото</string>
+    <string name="write_memory">📝 Напиши воспоминание</string>
+    <string name="what_happened_today">Что произошло сегодня?</string>
+    <string name="memory_saved">Воспоминание сохранено! 🌿</string>
+    <string name="photo_added">Фото добавлено!</string>
+    <string name="photo_deleted">Фото удалено</string>
+    <string name="leaf_withered">Лист увял 🍂</string>
+    <string name="active_leaf_title">🌱 Лист сегодня</string>
+    <string name="locked_leaf_title">🔒 Заблокировано</string>
+    <string name="withered_leaf_title">🍂 Увядший лист</string>
+    <string name="locked_memory_info">🔒 Это воспоминание заблокировано навсегда.</string>
+    <string name="note">📝 Заметка</string>
+    <string name="missed_this_day">Ты пропустил этот день...</string>
+    <string name="no_memory_added">Воспоминание не было добавлено, и лист увял.</string>
+    <string name="understood">Понятно</string>
+    <string name="delete_leaf_title">🗑️ Удалить лист</string>
+    <string name="delete_confirmation">Вы уверены, что хотите удалить этот лист?</string>
+    <string name="yes_delete">Да, удалить</string>
+    <string name="language_changed">Язык изменён...</string>
+    <string name="good_morning">Доброе утро 🌿</string>
+    <string name="good_afternoon">Добрый день 🌿</string>
+    <string name="good_evening">Добрый вечер 🌿</string>
+    <string name="plant_a_memory">🌱 Посади воспоминание...</string>
+    <string name="recent_memories">Недавние воспоминания</string>
+    <string name="active_status">🌱 Активный</string>
+    <string name="locked_status">🔒 Заблокировано</string>
+    <string name="withered_status">🍂 Увядший</string>
+    <string name="leaf_status_label">Статус листа</string>
+    <string name="streak">Серия</string>
+    <string name="total_memories_label">Всего воспоминаний</string>
+    <string name="words_written">Написано слов</string>
+    <string name="preferences">НАСТРОЙКИ</string>
+    <string name="support_developer">☕ Поддержать разработчика</string>
+    <string name="about_app">ℹ️ О Plantage</string>
+    <string name="your_garden">Ваш сад осознанности</string>
+    <string-array name="quotes">
+        <item>Наши воспоминания — это дерево, которое растёт, когда мы его питаем.</item>
+        <item>Воспоминание, посаженное сегодня, станет деревом, под которым ты отдохнёшь завтра.</item>
+        <item>Чем глубже наши корни, тем выше наши ветви тянутся к небу.</item>
+        <item>Время течёт, но воспоминания пускают корни там, где они есть.</item>
+        <item>Прошлое — это почва сегодняшнего дня; что посеешь, то и взойдёт в будущем.</item>
+        <item>Каждый прожитый день — это прочное кольцо на стволе древа жизни.</item>
+        <item>Даже самые могучие леса начинаются с тихого семени.</item>
+        <item>Каждое воспоминание, питающее душу — это лист, который никогда не увянет.</item>
+        <item>Каждая ветвь, растущая с терпением — величайший дар времени.</item>
+        <item>Лист, раскрывшийся сегодня — это завтрашняя история.</item>
+        <item>Жизнь не терпит спешки; как дерево, она растёт день за днём.</item>
+        <item>Каждое слово на бумаге — это семя, брошенное в вечность.</item>
+        <item>Твоя история — это живительная сила этого дерева.</item>
+        <item>Не дай ей исчезнуть; каждый момент заслуживает стать листом.</item>
+        <item>Тихо собранные воспоминания — наше убежище в самые шумные времена.</item>
+        <item>Ни один лист не похож на другой, как и твои уникальные воспоминания.</item>
+    </string-array>
+</resources>

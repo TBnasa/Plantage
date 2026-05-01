@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Colors - Green Tones -->
-    <color name="sage_green">#8FBC8F</color>
-    <color name="forest_green">#228B22</color>
-    <color name="olive_green">#6B8E23</color>
-    <color name="leaf_active">#4CAF50</color>
-    <color name="leaf_locked">#66BB6A</color>
-    <color name="leaf_withered">#8B6914</color>
-    
-    <!-- Earth Tones -->
-    <color name="terracotta">#B4654C</color>
-    <color name="terracotta_light">#C8806A</color>
-    <color name="soil_brown">#5D4037</color>
-    <color name="bark_brown">#654321</color>
-    
-    <!-- Background -->
-    <color name="background_cream">#F5F5F0</color>
-    <color name="background_soft_gray">#ECEEE8</color>
-    
-    <!-- UI Elements -->
-    <color name="text_primary">#3E3E3E</color>
-    <color name="text_secondary">#707070</color>
-    <color name="semi_transparent_gray">#60808080</color>
+    <!-- ═══════ Zen Design System — Organic Canvas ═══════ -->
+
+    <!-- Canvas / Global Background — Soft Cream -->
+    <color name="zen_bg">#F9F9F7</color>
+
+    <!-- Surfaces — Antique Paper (tactile warmth) -->
+    <color name="zen_surface">#FDFBF7</color>
+    <color name="zen_input_bg">#F4F2EE</color>
+
+    <!-- Primary Accent — Muted Sage Green (the "Living" force) -->
+    <color name="zen_accent">#8DA399</color>
+    <color name="zen_accent_dark">#6B8A7F</color>
+    <color name="zen_accent_light">#DDE8E4</color>
+
+    <!-- Secondary Accent — Warm Sand -->
+    <color name="zen_secondary">#EDE9E3</color>
+
+    <!-- Typography — Ink on paper tones -->
+    <color name="zen_text_primary">#2C3A30</color>
+    <color name="zen_text_secondary">#6B7C72</color>
+    <color name="zen_icon_inactive">#BDC8C3</color>
+
+    <!-- Borders & Dividers — whisper thin -->
+    <color name="zen_border">#E8E4DD</color>
+
+    <!-- Semantic -->
+    <color name="zen_danger">#C0665A</color>
+    <color name="zen_danger_dark">#A0524A</color>
+
+    <!-- ═══════ Tree View Palette ═══════ -->
+    <color name="sage_green">#8DA399</color>
+    <color name="leaf_active">#8DA399</color>
+    <color name="leaf_locked">#6B8A7F</color>
+    <color name="leaf_withered">#9E8A6A</color>
+
+    <!-- Tree — Organic tones -->
+    <color name="stem_green">#7A9E8E</color>
+    <color name="stem_dark">#5E7D6E</color>
+    <color name="leaf_vein">#5E7D6E</color>
+    <color name="leaf_vein_withered">#7A6A4F</color>
+
+    <!-- Earth Tones (Pot) — Warm terracotta -->
+    <color name="terracotta">#C4A68C</color>
+    <color name="terracotta_light">#D4BCA6</color>
+    <color name="soil_brown">#8B7355</color>
+
+    <!-- Basic -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    
-    <!-- Stem Colors -->
-    <color name="stem_green">#2EB860</color>
-    <color name="stem_dark">#1E8A48</color>
-    
-    <!-- Leaf Vein -->
-    <color name="leaf_vein">#328C46</color>
-    <color name="leaf_vein_withered">#6B5010</color>
+
+    <!-- Legacy aliases -->
+    <color name="background_cream">#F9F9F7</color>
+    <color name="background_soft_gray">#F9F9F7</color>
+    <color name="text_primary">#2C3A30</color>
+    <color name="text_secondary">#6B7C72</color>
+    <color name="semi_transparent_gray">#20808080</color>
 </resources>

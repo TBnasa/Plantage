@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Plantage</string>
+
+    <!-- Ayarlar -->
+    <string name="settings">⚙️ Ayarlar</string>
+    <string name="music_volume">🔊 Müzik Sesi</string>
+    <string name="language">🌐 Dil</string>
+    <string name="ok">Tamam</string>
+    <string name="cancel">İptal</string>
+    <string name="save">Kaydet</string>
+    <string name="close">Kapat</string>
+    <string name="delete">🗑️ Sil</string>
+
+    <!-- Yaprak diyaloğu -->
+    <string name="next_leaf">Sonraki Yaprak</string>
+    <string name="photos">📷 Fotoğraflar</string>
+    <string name="add_photo">+ Fotoğraf Ekle</string>
+    <string name="write_memory">📝 Anını Yaz</string>
+    <string name="what_happened_today">Bugün neler oldu?</string>
+    <string name="memory_saved">Anı kaydedildi! 🌿</string>
+    <string name="photo_added">Fotoğraf eklendi!</string>
+    <string name="photo_deleted">Fotoğraf silindi</string>
+    <string name="leaf_withered">Yaprak soldu 🍂</string>
+
+    <!-- Yaprak durumu başlıkları -->
+    <string name="active_leaf_title">🌱 Bugünün Yaprağı</string>
+    <string name="locked_leaf_title">🔒 Kilitli Anı</string>
+    <string name="withered_leaf_title">🍂 Solmuş Yaprak</string>
+
+    <!-- Kilitli yaprak -->
+    <string name="locked_memory_info">🔒 Bu anı kilitlendi ve sonsuza dek korunacak.</string>
+    <string name="note">📝 Not</string>
+
+    <!-- Solmuş yaprak -->
+    <string name="missed_this_day">Bu günü kaçırdın...</string>
+    <string name="no_memory_added">Bu gün için hiç anı eklenmedi ve yaprak soldu.</string>
+    <string name="understood">Anladım</string>
+
+    <!-- Silme onayı -->
+    <string name="delete_leaf_title">🗑️ Yaprağı Sil</string>
+    <string name="delete_confirmation">Bu yaprağı silmek istediğine emin misin?</string>
+    <string name="yes_delete">Evet, Sil</string>
+
+    <!-- Dil değişti -->
+    <string name="language_changed">Dil değiştirildi...</string>
+
+    <!-- Zaman çizelgesi -->
+    <string name="good_morning">Günaydın 🌿</string>
+    <string name="good_afternoon">Tünaydın 🌿</string>
+    <string name="good_evening">İyi akşamlar 🌿</string>
+    <string name="plant_a_memory">🌱 Bir anı ekle...</string>
+    <string name="recent_memories">Son Anılar</string>
+    <string name="active_status">🌱 Aktif</string>
+    <string name="growing_status">🌱 Büyüyor</string>
+    <string name="locked_status">🔒 Kilitli</string>
+    <string name="withered_status">🍂 Solmuş</string>
+
+    <!-- Büyüyen yaprak -->
+    <string name="growing_leaf_title">🌱 Filizleniyor...</string>
+    <string name="growing_leaf_info">Bu yaprak şu anda büyüyor. Gece yarısı anılarını yazman için hazır olacak.</string>
+    <string name="wait_for_maturity">Lütfen yaprağın olgunlaşmasını bekle.</string>
+
+    <!-- Büyüme ekranı -->
+    <string name="leaf_status_label">Yaprak Durumu</string>
+    <string name="streak">Seri</string>
+    <string name="total_memories_label">Toplam Anı</string>
+    <string name="words_written">Yazılan Kelime</string>
+
+    <!-- Ayarlar ekranı -->
+    <string name="preferences">TERCİHLER</string>
+    <string name="support_developer">☕ Geliştiriciyi Destekle</string>
+    <string name="about_app">ℹ️ Plantage Hakkında</string>
+    <string name="your_garden">Senin farkındalık bahçen</string>
+
+    <!-- Sözler -->
+    <string-array name="quotes">
+        <item>Anılarımız, biz onları besledikçe büyüyen bir ağaçtır.</item>
+        <item>Bugün dikilen bir anı, yarın gölgesinde dinleneceğiniz bir ağaç olur.</item>
+        <item>Köklerimiz ne kadar derine inerse, dallarımız gökyüzüne o kadar yüksek uzanır.</item>
+        <item>Zaman akar gider, ama anılar durdukları yerde kök salarlar.</item>
+        <item>Geçmiş bugünün toprağıdır; ne ekerseniz geleceğinizde o çiçek açar.</item>
+        <item>Yaşanan her gün, hayat ağacının gövdesine eklenen güçlü bir halkadır.</item>
+        <item>En ulu ormanlar bile sessiz bir tohumla başlar.</item>
+        <item>Ruhunuzu besleyen her anı, hiç solmayan bir yapraktır.</item>
+        <item>Sabırla büyüyen her dal, zamanın bize en büyük hediyesidir.</item>
+        <item>Bugün açan bir yaprak, yarının hikayesidir.</item>
+        <item>Hayat aceleye gelmez; bir ağaç gibi gün gün büyür.</item>
+        <item>Kağıda dökülen her kelime, sonsuzluğa atılan bir tohumdur.</item>
+        <item>Hikayeniz bu ağacın can suyudur.</item>
+        <item>Solup gitmesine izin vermeyin; her an bir yaprak olmayı hak eder.</item>
+        <item>Sessizce biriktirilen anılar, en gürültülü zamanlarda sığınağımızdır.</item>
+        <item>Hiçbir yaprak diğerine benzemez, tıpkı sizin eşsiz anılarınız gibi.</item>
+    </string-array>
+    <!-- Yedekle & Geri Yükle -->
+    <string name="backup_restore">💾 Yedekle &amp; Geri Yükle</string>
+    <string name="export_data">📤 Verileri Dışa Aktar (.plntg)</string>
+    <string name="import_data">📥 Verileri İçe Aktar (.plntg)</string>
+    <string name="enter_password">🔑 Şifre Girin</string>
+    <string name="backup_created">✅ Yedek başarıyla oluşturuldu</string>
+    <string name="restore_success">✅ Veriler başarıyla geri yüklendi</string>
+    <string name="invalid_password">❌ Geçersiz şifre veya bozuk dosya.</string>
+</resources>

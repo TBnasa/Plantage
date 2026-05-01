@@ -1,38 +1,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme — Plantage Zen / Organic Canvas -->
+    <!-- Base application theme — Plantage Night -->
     <style name="Theme.OrbitFocus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color — Muted Sage Green -->
         <item name="colorPrimary">@color/zen_accent</item>
         <item name="colorPrimaryVariant">@color/zen_accent_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
 
         <!-- Secondary — Warm sand accent -->
         <item name="colorSecondary">@color/zen_accent</item>
         <item name="colorSecondaryVariant">@color/zen_accent_dark</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
 
-        <!-- Background — Soft Cream canvas -->
+        <!-- Background — Dark Forest canvas -->
         <item name="android:windowBackground">@color/zen_bg</item>
         <item name="android:colorBackground">@color/zen_bg</item>
 
-        <!-- Status bar — blends with cream bg -->
+        <!-- Status bar — blends with dark bg -->
         <item name="android:statusBarColor">@color/zen_bg</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
 
-        <!-- Navigation bar — matches paper surface -->
+        <!-- Navigation bar — matches dark surface -->
         <item name="android:navigationBarColor">@color/zen_surface</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
 
-        <!-- Text — Ink on paper -->
+        <!-- Text — Light ink -->
         <item name="android:textColorPrimary">@color/zen_text_primary</item>
         <item name="android:textColorSecondary">@color/zen_text_secondary</item>
-    </style>
-
-    <!-- Splash theme -->
-    <style name="Theme.OrbitFocus.NoActionBar" parent="Theme.OrbitFocus">
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:statusBarColor">@color/zen_bg</item>
     </style>
 
 </resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════ Zen Design System — Deep Night Canvas ═══════ -->
+
+    <!-- Global Background — True Black for OLED/Deep experience -->
+    <color name="zen_bg">#000000</color>
+
+    <!-- Surfaces — Very Dark Slate -->
+    <color name="zen_surface">#0A0C0B</color>
+    <color name="zen_input_bg">#121614</color>
+
+    <!-- Primary Accent — Muted Sage Green -->
+    <color name="zen_accent">#8DA399</color>
+    <color name="zen_accent_dark">#6B8A7F</color>
+    <color name="zen_accent_light">#A4B8AF</color>
+
+    <!-- Secondary Accent — Deep Wood -->
+    <color name="zen_secondary">#141210</color>
+
+    <!-- Typography — Soft White / Grey tones -->
+    <color name="zen_text_primary">#E1E8E4</color>
+    <color name="zen_text_secondary">#8A948E</color>
+    <color name="zen_icon_inactive">#3E4743</color>
+
+    <!-- Borders & Dividers -->
+    <color name="zen_border">#1A1F1C</color>
+
+    <!-- Semantic -->
+    <color name="zen_danger">#E08A7E</color>
+    <color name="zen_danger_dark">#C0665A</color>
+
+    <!-- ═══════ Tree View Palette (Deep Night) ═══════ -->
+    <color name="sage_green">#8DA399</color>
+    <color name="leaf_active">#8DA399</color>
+    <color name="leaf_locked">#6B8A7F</color>
+    <color name="leaf_withered">#9E8A6A</color>
+
+    <!-- Earth Tones (Pot) -->
+    <color name="terracotta">#6B5643</color>
+    <color name="terracotta_light">#8B7355</color>
+    <color name="soil_brown">#2B231A</color>
+
+    <!-- Basic -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Legacy aliases -->
+    <color name="background_cream">#000000</color>
+    <color name="background_soft_gray">#000000</color>
+    <color name="text_primary">#E1E8E4</color>
+    <color name="text_secondary">#8A948E</color>
+</resources>

@@ -1,10 +1,18 @@
-package com.example.orbitfocus.model;
+package com.tbnasa.plantage.model;
 
 /**
  * Yaprak durumlarını tanımlayan Enum.
  * Her yaprak bu üç durumdan birinde olabilir.
  */
 public enum LeafStatus {
+    /**
+     * GROWING (Büyüyor):
+     * - Yaprak oluşturulduğu gün (24 saat boyunca) yavaş yavaş büyür.
+     * - Henüz not yazmaya uygun değildir.
+     * - Renk: Soluk Yeşil / Şeffaf
+     */
+    GROWING,
+
     /**
      * ACTIVE (Canlı):
      * - Bugün oluşturulmuş ve ertesi gün 00:00'a (gece yarısı) kadar
