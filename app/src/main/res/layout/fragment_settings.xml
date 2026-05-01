@@ -323,12 +323,19 @@
             android:paddingHorizontal="@dimen/pad_card"
             android:paddingVertical="@dimen/spacing_lg">
 
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_github"
+                android:tint="@color/zen_text_primary"
+                android:layout_marginEnd="@dimen/spacing_md" />
+
             <TextView
                 android:id="@+id/tvGithubLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="🐙 GitHub Repository"
+                android:text="Github"
                 android:textColor="@color/zen_text_primary"
                 android:textSize="@dimen/text_body" />
 
