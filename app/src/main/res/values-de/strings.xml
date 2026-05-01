@@ -35,16 +35,29 @@
     <string name="plant_a_memory">🌱 Pflanze eine Erinnerung...</string>
     <string name="recent_memories">Neueste Erinnerungen</string>
     <string name="active_status">🌱 Aktiv</string>
+    <string name="growing_status">🌱 Wachsend</string>
     <string name="locked_status">🔒 Gesperrt</string>
     <string name="withered_status">🍂 Verwelkt</string>
+
+    <!-- Growing leaf -->
+    <string name="growing_leaf_title">🌱 Keimt...</string>
+    <string name="growing_leaf_info">Dieses Blatt wächst gerade. Es wird um Mitternacht für deine Erinnerungen bereit sein.</string>
+    <string name="wait_for_maturity">Bitte warte, bis das Blatt reif ist.</string>
+
     <string name="leaf_status_label">Blattstatus</string>
     <string name="streak">Serie</string>
     <string name="total_memories_label">Erinnerungen</string>
     <string name="words_written">Geschriebene Wörter</string>
+    
+    <!-- Preferences -->
     <string name="preferences">EINSTELLUNGEN</string>
+    <string name="dark_mode">🌙 Dunkelmodus</string>
+    <string name="biometric_lock">🔒 Biometrische Sperre</string>
+    <string name="github_repo">Github-Repository</string>
     <string name="support_developer">☕ Entwickler unterstützen</string>
     <string name="about_app">ℹ️ Über Plantage</string>
     <string name="your_garden">Dein Achtsamkeitsgarten</string>
+
     <string-array name="quotes">
         <item>Unsere Erinnerungen sind ein Baum, der wächst, wenn wir ihn pflegen.</item>
         <item>Eine heute gepflanzte Erinnerung wird morgen ein Baum, unter dem du ruhen kannst.</item>
@@ -63,4 +76,13 @@
         <item>Still gesammelte Erinnerungen sind unsere Zuflucht in den lautesten Zeiten.</item>
         <item>Kein Blatt gleicht dem anderen, genau wie deine einzigartigen Erinnerungen.</item>
     </string-array>
+
+    <!-- Backup & Restore -->
+    <string name="backup_restore">💾 Sicherung &amp; Wiederherstellung</string>
+    <string name="export_data">📤 Daten exportieren (.plntg)</string>
+    <string name="import_data">📥 Daten importieren (.plntg)</string>
+    <string name="enter_password">🔑 Passwort eingeben</string>
+    <string name="backup_created">✅ Sicherung erfolgreich erstellt</string>
+    <string name="restore_success">✅ Daten erfolgreich wiederhergestellt</string>
+    <string name="invalid_password">❌ Ungültiges Passwort oder beschädigte Datei.</string>
 </resources>

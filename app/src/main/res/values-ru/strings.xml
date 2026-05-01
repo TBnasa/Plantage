@@ -35,16 +35,29 @@
     <string name="plant_a_memory">🌱 Посади воспоминание...</string>
     <string name="recent_memories">Недавние воспоминания</string>
     <string name="active_status">🌱 Активный</string>
+    <string name="growing_status">🌱 Растет</string>
     <string name="locked_status">🔒 Заблокировано</string>
     <string name="withered_status">🍂 Увядший</string>
+
+    <!-- Growing leaf -->
+    <string name="growing_leaf_title">🌱 Прорастает...</string>
+    <string name="growing_leaf_info">Этот лист сейчас растет. Он будет готов для ваших воспоминаний в полночь.</string>
+    <string name="wait_for_maturity">Пожалуйста, подождите, пока лист созреет.</string>
+
     <string name="leaf_status_label">Статус листа</string>
     <string name="streak">Серия</string>
     <string name="total_memories_label">Всего воспоминаний</string>
     <string name="words_written">Написано слов</string>
+    
+    <!-- Preferences -->
     <string name="preferences">НАСТРОЙКИ</string>
+    <string name="dark_mode">🌙 Темная тема</string>
+    <string name="biometric_lock">🔒 Биометрическая блокировка</string>
+    <string name="github_repo">Репозиторий Github</string>
     <string name="support_developer">☕ Поддержать разработчика</string>
     <string name="about_app">ℹ️ О Plantage</string>
     <string name="your_garden">Ваш сад осознанности</string>
+
     <string-array name="quotes">
         <item>Наши воспоминания — это дерево, которое растёт, когда мы его питаем.</item>
         <item>Воспоминание, посаженное сегодня, станет деревом, под которым ты отдохнёшь завтра.</item>
@@ -63,4 +76,13 @@
         <item>Тихо собранные воспоминания — наше убежище в самые шумные времена.</item>
         <item>Ни один лист не похож на другой, как и твои уникальные воспоминания.</item>
     </string-array>
+
+    <!-- Backup & Restore -->
+    <string name="backup_restore">💾 Резервное копирование</string>
+    <string name="export_data">📤 Экспорт данных (.plntg)</string>
+    <string name="import_data">📥 Импорт данных (.plntg)</string>
+    <string name="enter_password">🔑 Введите пароль</string>
+    <string name="backup_created">✅ Резервная копия успешно создана</string>
+    <string name="restore_success">✅ Данные успешно восстановлены</string>
+    <string name="invalid_password">❌ Неверный пароль или поврежденный файл.</string>
 </resources>

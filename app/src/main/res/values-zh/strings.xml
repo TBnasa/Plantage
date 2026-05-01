@@ -35,16 +35,29 @@
     <string name="plant_a_memory">🌱 种下一段回忆...</string>
     <string name="recent_memories">最近的回忆</string>
     <string name="active_status">🌱 活跃</string>
+    <string name="growing_status">🌱 生长中</string>
     <string name="locked_status">🔒 已锁定</string>
     <string name="withered_status">🍂 枯萎</string>
+
+    <!-- Growing leaf -->
+    <string name="growing_leaf_title">🌱 正在发芽...</string>
+    <string name="growing_leaf_info">这片叶子目前正在生长。它将在午夜准备好接收您的回忆。</string>
+    <string name="wait_for_maturity">请等待叶子成熟。</string>
+
     <string name="leaf_status_label">叶子状态</string>
     <string name="streak">连续</string>
     <string name="total_memories_label">总回忆</string>
     <string name="words_written">写下的字数</string>
+    
+    <!-- Preferences -->
     <string name="preferences">偏好设置</string>
+    <string name="dark_mode">🌙 深色模式</string>
+    <string name="biometric_lock">🔒 生物识别锁定</string>
+    <string name="github_repo">Github 仓库</string>
     <string name="support_developer">☕ 支持开发者</string>
     <string name="about_app">ℹ️ 关于 Plantage</string>
     <string name="your_garden">你的正念花园</string>
+
     <string-array name="quotes">
         <item>我们的回忆是一棵树，只要我们用心培育，它就会成长。</item>
         <item>今天种下的回忆，明天将成为你休憩的大树。</item>
@@ -63,4 +76,13 @@
         <item>静静积累的回忆，是我们在喧嚣中的避风港。</item>
         <item>没有两片叶子是相同的，就像你独特的回忆。</item>
     </string-array>
+
+    <!-- Backup & Restore -->
+    <string name="backup_restore">💾 备份与恢复</string>
+    <string name="export_data">📤 导出数据 (.plntg)</string>
+    <string name="import_data">📥 导入数据 (.plntg)</string>
+    <string name="enter_password">🔑 输入密码</string>
+    <string name="backup_created">✅ 备份创建成功</string>
+    <string name="restore_success">✅ 数据恢复成功</string>
+    <string name="invalid_password">❌ 密码无效或文件损坏。</string>
 </resources>
