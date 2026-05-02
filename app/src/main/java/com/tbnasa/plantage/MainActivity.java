@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> fileImportLauncher;
     private long pendingImageLeafId = -1;
     private BackupManager backupManager;
+    private ActivityResultLauncher<String> notificationPermissionLauncher;
 
     // ─── Fragments (cached) ───
     private final TimelineFragment timelineFragment = new TimelineFragment();
@@ -96,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         backupManager = new BackupManager(this);
+
+        notificationPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        lang.scheduleNotifications(true);
+                    }
+                });
 
         fileExportLauncher = registerForActivityResult(
                 new ActivityResultContracts.CreateDocument("application/octet-stream"),
@@ -204,13 +212,7 @@ public class MainActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) 
                     != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                androidx.activity.result.ActivityResultLauncher<String> requestPermissionLauncher =
-                        registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(), isGranted -> {
-                            if (isGranted) {
-                                lang.scheduleNotifications(true);
-                            }
-                        });
-                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
             }
         }
     }

@@ -60,7 +60,7 @@ public class LanguageManager {
     }
 
     public boolean isDarkMode() {
-        return prefs.getBoolean(KEY_DARK_MODE, true);
+        return prefs.getBoolean(KEY_DARK_MODE, false);
     }
 
     public void setDarkMode(boolean enabled) {
