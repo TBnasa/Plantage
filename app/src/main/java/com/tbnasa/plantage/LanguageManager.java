@@ -200,6 +200,8 @@ public class LanguageManager {
     public String getBiometricLabel() { return context.getString(R.string.biometric_lock); }
     public String getRemindersLabel() { return context.getString(R.string.reminders_label); }
     public String getFrequencyLabel() { return context.getString(R.string.frequency_label); }
+    public String getFreqHours() { return context.getString(R.string.freq_hours); }
+    public String getFreqMinutes() { return context.getString(R.string.freq_minutes); }
     public String getGithubLabel() { return context.getString(R.string.github_repo); }
     public String getSupportDeveloper() { return context.getString(R.string.support_developer); }
     public String getAboutApp() { return context.getString(R.string.about_app); }

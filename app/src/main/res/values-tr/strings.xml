@@ -103,4 +103,20 @@
     <string name="backup_created">✅ Yedek başarıyla oluşturuldu</string>
     <string name="restore_success">✅ Veriler başarıyla geri yüklendi</string>
     <string name="invalid_password">❌ Geçersiz şifre veya bozuk dosya.</string>
+
+    <string name="reminders_label">Günlük Hatırlatıcılar</string>
+    <string name="frequency_label">🔔 Hatırlatma Sıklığı</string>
+    <string name="freq_hours">sa</string>
+    <string name="freq_minutes">dk</string>
+
+    <string name="notif_remind_title_1">Günün nasıl geçti? 🌱</string>
+    <string name="notif_remind_title_2">Bahçen seni özledi...</string>
+    <string name="notif_remind_title_3">Ekim vakti! 🌿</string>
+    <string name="notif_remind_body_1">Bir anı ekmek için vakit ayır.</string>
+    <string name="notif_remind_body_2">Ağacın yeni bir yaprak bekliyor.</string>
+    <string name="notif_remind_body_3">Büyüme her seferinde bir anı ile olur.</string>
+    <string name="notif_zen_title_1">Zen vakti mi? 🌿</string>
+    <string name="notif_zen_title_2">Sadece nefes al...</string>
+    <string name="notif_zen_body_1">Derin bir nefes al ve bahçenle rahatla.</string>
+    <string name="notif_zen_body_2">Bugün harikaydın. Manzaranın tadını çıkar.</string>
 </resources>

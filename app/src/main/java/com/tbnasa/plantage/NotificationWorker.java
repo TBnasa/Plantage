@@ -36,15 +36,31 @@ public class NotificationWorker extends Worker {
         String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(new java.util.Date());
         Leaf todayLeaf = dbHelper.getLeafByDate(today);
 
+        java.util.Random random = new java.util.Random();
+        int index = random.nextInt(3) + 1; // 1 to 3
+        int zenIndex = random.nextInt(2) + 1; // 1 to 2
+
         if (todayLeaf == null || !todayLeaf.hasContent()) {
+            String titleId = "notif_remind_title_" + index;
+            String bodyId = "notif_remind_body_" + index;
+            
+            int titleResId = context.getResources().getIdentifier(titleId, "string", context.getPackageName());
+            int bodyResId = context.getResources().getIdentifier(bodyId, "string", context.getPackageName());
+            
             sendNotification(
-                "How was your day? 🌱",
-                "Your garden misses you. Spend a moment to plant a memory."
+                context.getString(titleResId),
+                context.getString(bodyResId)
             );
         } else {
+            String titleId = "notif_zen_title_" + zenIndex;
+            String bodyId = "notif_zen_body_" + zenIndex;
+            
+            int titleResId = context.getResources().getIdentifier(titleId, "string", context.getPackageName());
+            int bodyResId = context.getResources().getIdentifier(bodyId, "string", context.getPackageName());
+
             sendNotification(
-                "Time for a Zen moment? 🌿",
-                "Take a deep breath and relax with your garden."
+                context.getString(titleResId),
+                context.getString(bodyResId)
             );
         }
 

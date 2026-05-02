@@ -78,6 +78,20 @@
     <string name="about_app">ℹ️ About Plantage</string>
     <string name="your_garden">Your mindfulness garden</string>
 
+    <string name="freq_hours">h</string>
+    <string name="freq_minutes">m</string>
+
+    <string name="notif_remind_title_1">How was your day? 🌱</string>
+    <string name="notif_remind_title_2">Your garden misses you...</string>
+    <string name="notif_remind_title_3">Planting time! 🌿</string>
+    <string name="notif_remind_body_1">Spend a moment to plant a memory.</string>
+    <string name="notif_remind_body_2">Your tree is waiting for a new leaf.</string>
+    <string name="notif_remind_body_3">Growth happens one memory at a time.</string>
+    <string name="notif_zen_title_1">Time for a Zen moment? 🌿</string>
+    <string name="notif_zen_title_2">Just breathe...</string>
+    <string name="notif_zen_body_1">Take a deep breath and relax with your garden.</string>
+    <string name="notif_zen_body_2">You\'ve done great today. Enjoy the view.</string>
+
     <!-- Quotes -->
     <string-array name="quotes">
         <item>Our memories are a tree that grows as we nurture them.</item>

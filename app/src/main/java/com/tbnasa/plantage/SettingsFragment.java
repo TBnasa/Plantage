@@ -145,12 +145,12 @@ public class SettingsFragment extends Fragment {
 
     private void updateFrequencyText(int minutes) {
         if (minutes < 60) {
-            tvFrequencyValue.setText(minutes + "m");
+            tvFrequencyValue.setText(minutes + lang.getFreqMinutes());
         } else {
             int h = minutes / 60;
             int m = minutes % 60;
-            if (m == 0) tvFrequencyValue.setText(h + "h");
-            else tvFrequencyValue.setText(h + "h " + m + "m");
+            if (m == 0) tvFrequencyValue.setText(h + lang.getFreqHours());
+            else tvFrequencyValue.setText(h + lang.getFreqHours() + " " + m + lang.getFreqMinutes());
         }
     }
 
