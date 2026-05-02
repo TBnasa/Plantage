@@ -60,6 +60,7 @@ public class SettingsFragment extends Fragment {
         setupVolumeSlider(activity);
         setupFrequencySlider();
         setupLanguageRow(view);
+        setupFeatureSwitches();
         updateLanguageDisplay();
 
         // i18n labels
