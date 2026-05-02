@@ -1,6 +1,6 @@
 package com.tbnasa.plantage;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -335,6 +335,8 @@ public class TimelineFragment extends Fragment {
         Context ctx = requireContext();
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.ZenDialogTheme);
 
+        float density = getResources().getDisplayMetrics().density;
+
         // Title based on status
         String title;
         switch (leaf.status) {
@@ -447,6 +449,7 @@ public class TimelineFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             photoLp.topMargin = (int) (12 * getResources().getDisplayMetrics().density);
+            btnAddPhoto.setPadding(0, (int)(8*density), 0, (int)(8*density));
             btnAddPhoto.setLayoutParams(photoLp);
             btnAddPhoto.setOnClickListener(v -> {
                 MainActivity activity = (MainActivity) requireActivity();
@@ -454,7 +457,10 @@ public class TimelineFragment extends Fragment {
             });
             dialogLayout.addView(btnAddPhoto);
 
-            builder.setView(dialogLayout);
+            // Wrap in ScrollView
+            android.widget.ScrollView scrollView = new android.widget.ScrollView(ctx);
+            scrollView.addView(dialogLayout);
+            builder.setView(scrollView);
 
             builder.setPositiveButton(lang.getSave(), (dialog, which) -> {
                 String newContent = etContent.getText().toString().trim();
