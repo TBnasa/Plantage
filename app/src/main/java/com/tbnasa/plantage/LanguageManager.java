@@ -213,4 +213,12 @@ public class LanguageManager {
     public String getBackupCreated() { return context.getString(R.string.backup_created); }
     public String getRestoreSuccess() { return context.getString(R.string.restore_success); }
     public String getInvalidPassword() { return context.getString(R.string.invalid_password); }
+
+    public String getZenModeTitle() { return context.getString(R.string.zen_mode_title); }
+    public String getInhale() { return context.getString(R.string.inhale); }
+    public String getHold() { return context.getString(R.string.hold); }
+    public String getExhale() { return context.getString(R.string.exhale); }
+    public String getZenDone() { return context.getString(R.string.zen_done); }
+    public String getStartZen() { return context.getString(R.string.start_zen); }
+    public String getStopZen() { return context.getString(R.string.stop_zen); }
 }

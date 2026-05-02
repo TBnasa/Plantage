@@ -119,4 +119,13 @@
     <string name="backup_created">✅ Backup created successfully</string>
     <string name="restore_success">✅ Data restored successfully</string>
     <string name="invalid_password">❌ Invalid password or corrupted file.</string>
+
+    <!-- Zen Breathing -->
+    <string name="zen_mode_title">Zen Breathing 🌿</string>
+    <string name="inhale">Inhale...</string>
+    <string name="hold">Hold...</string>
+    <string name="exhale">Exhale...</string>
+    <string name="zen_done">You planted peace in your garden 🌱</string>
+    <string name="start_zen">Start Zen</string>
+    <string name="stop_zen">Stop</string>
 </resources>

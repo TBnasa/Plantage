@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private final TimelineFragment timelineFragment = new TimelineFragment();
     // GardensFragment removed
     private final GrowthFragment growthFragment = new GrowthFragment();
+    private final BreathingFragment breathingFragment = new BreathingFragment();
     private final SettingsFragment settingsFragment = new SettingsFragment();
     private Fragment activeFragment;
 
@@ -130,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 switchFragment(timelineFragment);
             } else if (id == R.id.nav_status) {
                 switchFragment(growthFragment);
+            } else if (id == R.id.nav_zen) {
+                switchFragment(breathingFragment);
             } else if (id == R.id.nav_settings) {
                 switchFragment(settingsFragment);
             }

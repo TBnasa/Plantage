@@ -119,4 +119,13 @@
     <string name="notif_zen_title_2">Sadece nefes al...</string>
     <string name="notif_zen_body_1">Derin bir nefes al ve bahçenle rahatla.</string>
     <string name="notif_zen_body_2">Bugün harikaydın. Manzaranın tadını çıkar.</string>
+
+    <!-- Zen Breathing -->
+    <string name="zen_mode_title">Zen Nefesi 🌿</string>
+    <string name="inhale">Nefes Al...</string>
+    <string name="hold">Tut...</string>
+    <string name="exhale">Nefes Ver...</string>
+    <string name="zen_done">Bahçene huzur ektin 🌱</string>
+    <string name="start_zen">Zen Başlat</string>
+    <string name="stop_zen">Durdur</string>
 </resources>
