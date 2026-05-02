@@ -12,6 +12,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         lang = new LanguageManager(this);
         dbHelper = new DatabaseHelper(this);
         backupManager = new BackupManager(this);
+
+        setupFullscreen();
 
         // Register launchers FIRST
         notificationPermissionLauncher = registerForActivityResult(
@@ -219,6 +224,13 @@ public class MainActivity extends AppCompatActivity {
                 notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
             }
         }
+    }
+
+    private void setupFullscreen() {
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowInsetsControllerCompat controller = new WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
+        controller.hide(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
+        controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
     }
 
     private void handleBiometricAuth() {
