@@ -96,17 +96,28 @@ public class LanguageManager {
 
     public void scheduleNotifications(boolean enabled) {
         androidx.work.WorkManager wm = androidx.work.WorkManager.getInstance(context);
+        wm.cancelUniqueWork("garden_reminders");
+        wm.cancelUniqueWork("garden_reminders_oneshot");
+
         if (enabled) {
             int mins = getReminderFrequency();
-            if (mins < 15) mins = 15; // WorkManager minimum
             
-            androidx.work.PeriodicWorkRequest request = new androidx.work.PeriodicWorkRequest.Builder(
-                    NotificationWorker.class, mins, java.util.concurrent.TimeUnit.MINUTES)
-                    .build();
-            wm.enqueueUniquePeriodicWork("garden_reminders", 
-                    androidx.work.ExistingPeriodicWorkPolicy.UPDATE, request);
-        } else {
-            wm.cancelUniqueWork("garden_reminders");
+            if (mins < 15) {
+                // WorkManager periodic limit is 15 mins.
+                // For shorter intervals, use a one-shot work that reschedules itself.
+                androidx.work.OneTimeWorkRequest request = new androidx.work.OneTimeWorkRequest.Builder(NotificationWorker.class)
+                        .setInitialDelay(mins, java.util.concurrent.TimeUnit.MINUTES)
+                        .addTag("garden_reminders_oneshot")
+                        .build();
+                wm.enqueueUniqueWork("garden_reminders_oneshot", 
+                        androidx.work.ExistingWorkPolicy.REPLACE, request);
+            } else {
+                androidx.work.PeriodicWorkRequest request = new androidx.work.PeriodicWorkRequest.Builder(
+                        NotificationWorker.class, mins, java.util.concurrent.TimeUnit.MINUTES)
+                        .build();
+                wm.enqueueUniquePeriodicWork("garden_reminders", 
+                        androidx.work.ExistingPeriodicWorkPolicy.UPDATE, request);
+            }
         }
     }
 

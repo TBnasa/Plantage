@@ -29,8 +29,9 @@ public class NotificationWorker extends Worker {
     @Override
     public Result doWork() {
         Context context = getApplicationContext();
+        LanguageManager lang = new LanguageManager(context);
         DatabaseHelper dbHelper = new DatabaseHelper(context);
-
+        
         // Check if today's memory is already planted
         String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(new java.util.Date());
         Leaf todayLeaf = dbHelper.getLeafByDate(today);
@@ -41,14 +42,31 @@ public class NotificationWorker extends Worker {
                 "Your garden misses you. Spend a moment to plant a memory."
             );
         } else {
-            // If already planted, maybe suggest a breathing exercise
             sendNotification(
                 "Time for a Zen moment? 🌿",
                 "Take a deep breath and relax with your garden."
             );
         }
 
+        // Handle recursive scheduling for frequencies < 15 minutes
+        int freq = lang.getReminderFrequency();
+        if (freq < 15) {
+            scheduleNextOneShot(context, freq);
+        }
+
         return Result.success();
+    }
+
+    private void scheduleNextOneShot(Context context, int minutes) {
+        androidx.work.OneTimeWorkRequest request = new androidx.work.OneTimeWorkRequest.Builder(NotificationWorker.class)
+                .setInitialDelay(minutes, java.util.concurrent.TimeUnit.MINUTES)
+                .addTag("garden_reminders_oneshot")
+                .build();
+        
+        androidx.work.WorkManager.getInstance(context).enqueueUniqueWork(
+                "garden_reminders_oneshot",
+                androidx.work.ExistingWorkPolicy.REPLACE,
+                request);
     }
 
     private void sendNotification(String title, String message) {
