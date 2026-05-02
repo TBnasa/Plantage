@@ -173,4 +173,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return new Leaf(id, date, content, images, status, createdAt);
     }
+
+    /**
+     * Calculates the current daily streak.
+     */
+    public int calculateStreak() {
+        List<Leaf> leaves = getAllLeaves();
+        int streak = 0;
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+
+        // Count backwards from today
+        for (int i = 0; i < 365; i++) {
+            String dateStr = format.format(cal.getTime());
+            boolean found = false;
+            for (Leaf leaf : leaves) {
+                if (dateStr.equals(leaf.date) && leaf.hasContent()) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                streak++;
+                cal.add(java.util.Calendar.DAY_OF_YEAR, -1);
+            } else {
+                // If today is empty, check yesterday. If yesterday was full, streak is still alive.
+                if (i == 0) {
+                    cal.add(java.util.Calendar.DAY_OF_YEAR, -1);
+                    continue;
+                }
+                break;
+            }
+        }
+        return streak;
+    }
+
+    /**
+     * Returns total number of memories (leaves with content).
+     */
+    public int getTotalMemories() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_LEAVES + " WHERE " + COLUMN_CONTENT + " IS NOT NULL AND " + COLUMN_CONTENT + " != ''", null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return count;
+    }
 }

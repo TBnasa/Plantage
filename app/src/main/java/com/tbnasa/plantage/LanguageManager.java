@@ -20,6 +20,7 @@ public class LanguageManager {
     private static final String KEY_DARK_MODE = "dark_mode";
     private static final String KEY_BIOMETRIC = "biometric_enabled";
     private static final String KEY_REMINDERS = "reminders_enabled";
+    private static final String KEY_REMINDER_FREQUENCY = "reminder_frequency"; // in minutes
 
     public static final String LANG_TR = "tr";
     public static final String LANG_EN = "en";
@@ -84,11 +85,23 @@ public class LanguageManager {
         scheduleNotifications(enabled);
     }
 
+    public int getReminderFrequency() {
+        return prefs.getInt(KEY_REMINDER_FREQUENCY, 300); // Default 5 hours (300 mins)
+    }
+
+    public void setReminderFrequency(int minutes) {
+        prefs.edit().putInt(KEY_REMINDER_FREQUENCY, minutes).apply();
+        scheduleNotifications(true);
+    }
+
     public void scheduleNotifications(boolean enabled) {
         androidx.work.WorkManager wm = androidx.work.WorkManager.getInstance(context);
         if (enabled) {
+            int mins = getReminderFrequency();
+            if (mins < 15) mins = 15; // WorkManager minimum
+            
             androidx.work.PeriodicWorkRequest request = new androidx.work.PeriodicWorkRequest.Builder(
-                    NotificationWorker.class, 5, java.util.concurrent.TimeUnit.HOURS)
+                    NotificationWorker.class, mins, java.util.concurrent.TimeUnit.MINUTES)
                     .build();
             wm.enqueueUniquePeriodicWork("garden_reminders", 
                     androidx.work.ExistingPeriodicWorkPolicy.UPDATE, request);
@@ -175,6 +188,7 @@ public class LanguageManager {
     public String getDarkModeLabel() { return context.getString(R.string.dark_mode); }
     public String getBiometricLabel() { return context.getString(R.string.biometric_lock); }
     public String getRemindersLabel() { return context.getString(R.string.reminders_label); }
+    public String getFrequencyLabel() { return context.getString(R.string.frequency_label); }
     public String getGithubLabel() { return context.getString(R.string.github_repo); }
     public String getSupportDeveloper() { return context.getString(R.string.support_developer); }
     public String getAboutApp() { return context.getString(R.string.about_app); }

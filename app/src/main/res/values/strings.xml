@@ -72,6 +72,7 @@
     <string name="dark_mode">🌙 Dark Mode</string>
     <string name="biometric_lock">🔒 Biometric Lock</string>
     <string name="reminders_label">Daily Reminders</string>
+    <string name="frequency_label">🔔 Reminder Frequency</string>
     <string name="github_repo">Github Repository</string>
     <string name="support_developer">☕ Support the Developer</string>
     <string name="about_app">ℹ️ About Plantage</string>

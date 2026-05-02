@@ -29,9 +29,9 @@ import java.io.OutputStream;
  */
 public class SettingsFragment extends Fragment {
 
-    private SeekBar seekVolume;
-    private TextView tvVolumeValue, tvCurrentLang;
-    private SwitchCompat switchDarkMode, switchBiometric, switchReminders;
+    private SeekBar seekVolume, seekFrequency;
+    private TextView tvVolumeValue, tvFrequencyValue, tvCurrentLang;
+    private SwitchCompat switchDarkMode, switchBiometric;
     private LanguageManager lang;
 
     @Nullable
@@ -50,15 +50,16 @@ public class SettingsFragment extends Fragment {
         lang = activity.getLang();
 
         seekVolume = view.findViewById(R.id.seekVolume);
+        seekFrequency = view.findViewById(R.id.seekFrequency);
         tvVolumeValue = view.findViewById(R.id.tvVolumeValue);
+        tvFrequencyValue = view.findViewById(R.id.tvFrequencyValue);
         tvCurrentLang = view.findViewById(R.id.tvCurrentLang);
         switchDarkMode = view.findViewById(R.id.switchDarkMode);
         switchBiometric = view.findViewById(R.id.switchBiometric);
-        switchReminders = view.findViewById(R.id.switchReminders);
 
         setupVolumeSlider(activity);
+        setupFrequencySlider();
         setupLanguageRow(view);
-        setupFeatureSwitches();
         updateLanguageDisplay();
 
         // i18n labels
@@ -69,7 +70,7 @@ public class SettingsFragment extends Fragment {
         TextView tvSettingsSubtitle = view.findViewById(R.id.tvSettingsSubtitle);
         TextView tvDarkModeLabel = view.findViewById(R.id.tvDarkModeLabel);
         TextView tvBiometricLabel = view.findViewById(R.id.tvBiometricLabel);
-        TextView tvRemindersLabel = view.findViewById(R.id.tvRemindersLabel);
+        TextView tvFrequencyLabel = view.findViewById(R.id.tvFrequencyLabel);
         TextView tvGithubLabel = view.findViewById(R.id.tvGithubLabel);
 
         if (tvPrefsLabel != null) tvPrefsLabel.setText(lang.getPreferences());
@@ -79,7 +80,7 @@ public class SettingsFragment extends Fragment {
         if (tvSettingsSubtitle != null) tvSettingsSubtitle.setText(lang.getYourGarden());
         if (tvDarkModeLabel != null) tvDarkModeLabel.setText(lang.getDarkModeLabel());
         if (tvBiometricLabel != null) tvBiometricLabel.setText(lang.getBiometricLabel());
-        if (tvRemindersLabel != null) tvRemindersLabel.setText(lang.getRemindersLabel());
+        if (tvFrequencyLabel != null) tvFrequencyLabel.setText(lang.getFrequencyLabel());
         if (tvGithubLabel != null) tvGithubLabel.setText(lang.getGithubLabel());
 
         setupBackupSection(view);
@@ -122,6 +123,36 @@ public class SettingsFragment extends Fragment {
         rowLanguage.setOnClickListener(v -> showLanguageDialog());
     }
 
+    private void setupFrequencySlider() {
+        int freq = lang.getReminderFrequency();
+        seekFrequency.setProgress(freq);
+        updateFrequencyText(freq);
+
+        seekFrequency.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress < 1) progress = 1;
+                updateFrequencyText(progress);
+                if (fromUser) {
+                    lang.setReminderFrequency(progress);
+                }
+            }
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+    private void updateFrequencyText(int minutes) {
+        if (minutes < 60) {
+            tvFrequencyValue.setText(minutes + "m");
+        } else {
+            int h = minutes / 60;
+            int m = minutes % 60;
+            if (m == 0) tvFrequencyValue.setText(h + "h");
+            else tvFrequencyValue.setText(h + "h " + m + "m");
+        }
+    }
+
     private void setupFeatureSwitches() {
         if (switchDarkMode != null) {
             switchDarkMode.setChecked(lang.isDarkMode());
@@ -134,13 +165,6 @@ public class SettingsFragment extends Fragment {
             switchBiometric.setChecked(lang.isBiometricEnabled());
             switchBiometric.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 lang.setBiometricEnabled(isChecked);
-            });
-        }
-
-        if (switchReminders != null) {
-            switchReminders.setChecked(lang.isRemindersEnabled());
-            switchReminders.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                lang.setRemindersEnabled(isChecked);
             });
         }
     }

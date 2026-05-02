@@ -34,9 +34,14 @@ public class PlantageWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_plantage);
 
         // Render the tree to bitmap
-        // Widgets usually have limited size, 512x512 is a good compromise for quality/memory
         Bitmap treeBitmap = PlantageTreeView.renderToBitmap(context, 512, 512, leaves);
         views.setImageViewBitmap(R.id.widget_tree_image, treeBitmap);
+
+        // Stats logic
+        int streak = dbHelper.calculateStreak();
+        int total = dbHelper.getTotalMemories();
+        views.setTextViewText(R.id.widget_streak_text, "🔥 " + streak);
+        views.setTextViewText(R.id.widget_total_text, "📖 " + total);
 
         // Click to open app
         Intent intent = new Intent(context, MainActivity.class);

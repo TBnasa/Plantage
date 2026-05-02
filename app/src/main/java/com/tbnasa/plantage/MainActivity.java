@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         lang = new LanguageManager(this);
         dbHelper = new DatabaseHelper(this);
         lang.scheduleNotifications(lang.isRemindersEnabled());
+        requestNotificationPermission();
 
         // Start music service
         Intent musicIntent = new Intent(this, MusicService.class);
@@ -198,6 +199,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ─── Lifecycle cleanup ───
+
+    private void requestNotificationPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) 
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                androidx.activity.result.ActivityResultLauncher<String> requestPermissionLauncher =
+                        registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(), isGranted -> {
+                            if (isGranted) {
+                                lang.scheduleNotifications(true);
+                            }
+                        });
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+    }
+
+    private void handleBiometricAuth() {
+    }
 
     @Override
     protected void onDestroy() {
