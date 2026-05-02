@@ -30,6 +30,8 @@ public class NotificationWorker extends Worker {
     public Result doWork() {
         Context context = getApplicationContext();
         LanguageManager lang = new LanguageManager(context);
+        context = lang.applyLocale(context); // Apply user's selected language
+        
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         
         // Check if today's memory is already planted

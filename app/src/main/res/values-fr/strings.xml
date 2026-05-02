@@ -85,4 +85,20 @@
     <string name="backup_created">✅ Sauvegarde créée avec succès</string>
     <string name="restore_success">✅ Données restaurées avec succès</string>
     <string name="invalid_password">❌ Mot de passe invalide ou fichier corrompu.</string>
+
+    <string name="reminders_label">Rappels quotidiens</string>
+    <string name="frequency_label">🔔 Fréquence des rappels</string>
+    <string name="freq_hours">h</string>
+    <string name="freq_minutes">m</string>
+
+    <string name="notif_remind_title_1">Comment s\'est passée ta journée ? 🌱</string>
+    <string name="notif_remind_title_2">Ton jardin te manque...</string>
+    <string name="notif_remind_title_3">C\'est l\'heure de planter ! 🌿</string>
+    <string name="notif_remind_body_1">Prends un moment pour planter un souvenir.</string>
+    <string name="notif_remind_body_2">Ton arbre attend une nouvelle feuille.</string>
+    <string name="notif_remind_body_3">La croissance se fait souvenir après souvenir.</string>
+    <string name="notif_zen_title_1">Un moment de calme ? 🌿</string>
+    <string name="notif_zen_title_2">Respire simplement...</string>
+    <string name="notif_zen_body_1">Prends une grande inspiration et détends-toi dans ton jardin.</string>
+    <string name="notif_zen_body_2">Tu as fait du bon travail aujourd\'hui. Profite de la vue.</string>
 </resources>

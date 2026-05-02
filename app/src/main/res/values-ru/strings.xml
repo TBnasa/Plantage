@@ -85,4 +85,20 @@
     <string name="backup_created">✅ Резервная копия успешно создана</string>
     <string name="restore_success">✅ Данные успешно восстановлены</string>
     <string name="invalid_password">❌ Неверный пароль или поврежденный файл.</string>
+
+    <string name="reminders_label">Ежедневные напоминания</string>
+    <string name="frequency_label">🔔 Частота напоминаний</string>
+    <string name="freq_hours">ч</string>
+    <string name="freq_minutes">м</string>
+
+    <string name="notif_remind_title_1">Как прошел твой день? 🌱</string>
+    <string name="notif_remind_title_2">Ваш сад скучает по вам...</string>
+    <string name="notif_remind_title_3">Время сажать! 🌿</string>
+    <string name="notif_remind_body_1">Найдите минутку, чтобы посадить воспоминание.</string>
+    <string name="notif_remind_body_2">Ваше дерево ждет нового листа.</string>
+    <string name="notif_remind_body_3">Рост происходит по одному воспоминанию за раз.</string>
+    <string name="notif_zen_title_1">Время для дзен-паузы? 🌿</string>
+    <string name="notif_zen_title_2">Просто дыши...</string>
+    <string name="notif_zen_body_1">Сделайте глубокий вдох и расслабьтесь вместе со своим садом.</string>
+    <string name="notif_zen_body_2">Вы сегодня отлично справились. Наслаждайтесь видом.</string>
 </resources>

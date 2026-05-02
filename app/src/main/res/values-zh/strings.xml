@@ -85,4 +85,20 @@
     <string name="backup_created">✅ 备份创建成功</string>
     <string name="restore_success">✅ 数据恢复成功</string>
     <string name="invalid_password">❌ 密码无效或文件损坏。</string>
+
+    <string name="reminders_label">每日提醒</string>
+    <string name="frequency_label">🔔 提醒频率</string>
+    <string name="freq_hours">小时</string>
+    <string name="freq_minutes">分钟</string>
+
+    <string name="notif_remind_title_1">今天过得怎么样？ 🌱</string>
+    <string name="notif_remind_title_2">你的花园想你了...</string>
+    <string name="notif_remind_title_3">该播种了！ 🌿</string>
+    <string name="notif_remind_body_1">花一点时间写下你的回忆。</string>
+    <string name="notif_remind_body_2">你的树正在等待新的叶子。</string>
+    <string name="notif_remind_body_3">成长源于每一个点滴的回忆。</string>
+    <string name="notif_zen_title_1">来个禅意时刻？ 🌿</string>
+    <string name="notif_zen_title_2">深呼吸...</string>
+    <string name="notif_zen_body_1">深呼吸，和你的花园一起放松。</string>
+    <string name="notif_zen_body_2">你今天做得很好。享受这片美景吧。</string>
 </resources>
