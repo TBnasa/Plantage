@@ -78,15 +78,16 @@ public class MainActivity extends AppCompatActivity {
         // Init shared services
         lang = new LanguageManager(this);
         dbHelper = new DatabaseHelper(this);
-        lang.scheduleNotifications(lang.isRemindersEnabled());
-        requestNotificationPermission();
+        backupManager = new BackupManager(this);
 
-        // Start music service
-        Intent musicIntent = new Intent(this, MusicService.class);
-        startService(musicIntent);
-        bindService(musicIntent, musicConnection, Context.BIND_AUTO_CREATE);
+        // Register launchers FIRST
+        notificationPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        lang.scheduleNotifications(true);
+                    }
+                });
 
-        // Image picker
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -94,15 +95,6 @@ public class MainActivity extends AppCompatActivity {
                         ((TimelineFragment) activeFragment).onImagePicked(pendingImageLeafId, uri);
                     }
                     pendingImageLeafId = -1;
-                });
-
-        backupManager = new BackupManager(this);
-
-        notificationPermissionLauncher = registerForActivityResult(
-                new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
-                        lang.scheduleNotifications(true);
-                    }
                 });
 
         fileExportLauncher = registerForActivityResult(
@@ -120,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
                         ((SettingsFragment) activeFragment).onImportFileSelected(uri);
                     }
                 });
+
+        // Now call logic that uses launchers
+        lang.scheduleNotifications(lang.isRemindersEnabled());
+        requestNotificationPermission();
+
+        // Start music service
+        Intent musicIntent = new Intent(this, MusicService.class);
+        startService(musicIntent);
+        bindService(musicIntent, musicConnection, Context.BIND_AUTO_CREATE);
 
         // Bottom navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
